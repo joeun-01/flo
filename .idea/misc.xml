@@ -6,10 +6,12 @@
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/btm_color_selector.xml" value="0.226" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_song.xml" value="0.16799999999999998" />
-        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_album.xml" value="0.264" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_locker.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_look.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_search.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/item_album.xml" value="0.23822463768115942" />
         <entry key="..\:/Users/jungwoo/AndroidStudioProjects/FLO/app/src/main/res/drawable-v24/main_btm_color_selector.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/jungwoo/AndroidStudioProjects/FLO/app/src/main/res/drawable/main_btm_color_selector.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/jungwoo/AndroidStudioProjects/FLO/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />

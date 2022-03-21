@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.flo.com.example.flo.AlbumFragment
 import com.example.flo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -18,6 +19,11 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        binding.homeAlbumImgIv1.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,
+                AlbumFragment()
+            ).commitAllowingStateLoss()
+        }
         return binding.root
     }
 }
