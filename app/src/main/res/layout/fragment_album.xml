@@ -263,6 +263,23 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/song_list_rep_01_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TITLE"
+                android:textSize="9sp"
+                android:textColor="@color/white"
+                android:background="@drawable/textview_background_select_color_radius"
+                android:layout_marginStart="8dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:layout_constraintStart_toEndOf="@+id/song_list_order_01_tv"
+                app:layout_constraintEnd_toStartOf="@+id/song_list_title_01_tv"
+                app:layout_constraintTop_toTopOf="@+id/song_list_order_01_tv"
+                app:layout_constraintBottom_toBottomOf="@id/song_list_order_01_tv"/>
+
+
+            <TextView
                 android:id="@+id/song_list_title_01_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -270,9 +287,9 @@
                 android:text="라일락"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@+id/song_list_singer_01_tv"
-                app:layout_constraintStart_toEndOf="@+id/song_list_order_01_tv"
-                app:layout_constraintTop_toTopOf="@+id/song_list_order_01_tv" />
+                app:layout_constraintStart_toEndOf="@+id/song_list_rep_01_tv"
+                app:layout_constraintTop_toTopOf="@+id/song_list_order_01_tv"
+                app:layout_constraintBottom_toBottomOf="@+id/song_list_order_01_tv"/>
 
             <TextView
                 android:id="@+id/song_list_singer_01_tv"
@@ -281,7 +298,7 @@
                 android:text="가수"
                 android:textSize="12sp"
                 android:layout_marginBottom="5dp"
-                app:layout_constraintStart_toStartOf="@+id/song_list_title_01_tv"
+                app:layout_constraintStart_toStartOf="@+id/song_list_rep_01_tv"
                 app:layout_constraintTop_toBottomOf="@+id/song_list_title_01_tv"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -389,6 +406,22 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/song_list_rep_03_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TITLE"
+                android:textSize="9sp"
+                android:textColor="@color/white"
+                android:background="@drawable/textview_background_select_color_radius"
+                android:layout_marginStart="8dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:layout_constraintStart_toEndOf="@+id/song_list_order_03_tv"
+                app:layout_constraintEnd_toStartOf="@+id/song_list_title_03_tv"
+                app:layout_constraintTop_toTopOf="@+id/song_list_order_03_tv"
+                app:layout_constraintBottom_toBottomOf="@id/song_list_order_03_tv"/>
+
+            <TextView
                 android:id="@+id/song_list_title_03_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -396,9 +429,9 @@
                 android:text="Coin"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@+id/song_list_singer_03_tv"
-                app:layout_constraintStart_toEndOf="@+id/song_list_order_03_tv"
-                app:layout_constraintTop_toTopOf="@+id/song_list_order_03_tv" />
+                app:layout_constraintTop_toTopOf="@+id/song_list_order_03_tv"
+                app:layout_constraintStart_toEndOf="@+id/song_list_rep_03_tv"
+                app:layout_constraintBottom_toBottomOf="@+id/song_list_order_03_tv" />
 
             <TextView
                 android:id="@+id/song_list_singer_03_tv"
@@ -407,7 +440,7 @@
                 android:text="가수"
                 android:textSize="12sp"
                 android:layout_marginBottom="5dp"
-                app:layout_constraintStart_toStartOf="@+id/song_list_title_03_tv"
+                app:layout_constraintStart_toStartOf="@+id/song_list_rep_03_tv"
                 app:layout_constraintTop_toBottomOf="@+id/song_list_title_03_tv"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
