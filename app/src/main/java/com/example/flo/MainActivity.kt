@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         }
         initBottomNavigation()
 
-
-
         Log.d("Song", song.title + song.singer)
 
     }

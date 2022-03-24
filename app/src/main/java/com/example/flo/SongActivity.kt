@@ -24,6 +24,23 @@ class SongActivity : AppCompatActivity()   {
             setPlayerStatus(true)
         }
 
+        binding.songRepeatOffIv.setOnClickListener {
+            setRepeatStatus(false)
+        }
+        binding.songRepeatOnIv.setOnClickListener {
+            setRepeatOneStatus(false)
+        }
+        binding.songRepeatOnOneIv.setOnClickListener {
+            setRepeatOneStatus(true)
+        }
+
+        binding.songRandomOffIv.setOnClickListener {
+            setRandomStatus(false)
+        }
+        binding.songRandomOnIv.setOnClickListener {
+            setRandomStatus(true)
+        }
+
         if(intent.hasExtra("title") && intent.hasExtra("singer")) {
             binding.songMusicTitleTv.text = intent.getStringExtra("title")
             binding.songSignerNameTv.text = intent.getStringExtra("singer")
@@ -38,6 +55,35 @@ class SongActivity : AppCompatActivity()   {
         else{
             binding.songMiniplayerIv.visibility = View.GONE
             binding.songPauseIv.visibility = View.VISIBLE
+        }
+    }
+
+    fun setRepeatStatus(isOn : Boolean) {
+        if(!isOn) {
+            binding.songRepeatOnIv.visibility = View.VISIBLE
+            binding.songRepeatOffIv.visibility = View.GONE
+        }
+    }
+
+    fun setRepeatOneStatus(isOn : Boolean) {
+        if(isOn) {
+            binding.songRepeatOnOneIv.visibility = View.GONE
+            binding.songRepeatOffIv.visibility = View.VISIBLE
+        }
+        else {
+            binding.songRepeatOnIv.visibility = View.GONE
+            binding.songRepeatOnOneIv.visibility = View.VISIBLE
+        }
+    }
+
+    fun setRandomStatus(isOn : Boolean) {
+        if(isOn) {
+            binding.songRandomOffIv.visibility = View.VISIBLE
+            binding.songRandomOnIv.visibility = View.GONE
+        }
+        else {
+            binding.songRandomOffIv.visibility = View.GONE
+            binding.songRandomOnIv.visibility = View.VISIBLE
         }
     }
 }

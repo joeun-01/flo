@@ -68,7 +68,9 @@
             android:layout_height="60dp"
             android:src="@drawable/btn_panel_play_large"
             android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/home_pannel_title_tv"
             app:layout_constraintTop_toBottomOf="@+id/home_pannel_title_tv"/>
 
         <ImageView

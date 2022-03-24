@@ -27,10 +27,29 @@ class AlbumFragment : Fragment() {
             ).commitAllowingStateLoss()
         }
 
+        binding.albumSongsToggleOffIv.setOnClickListener {
+            setToggleStatus(false)
+        }
+        binding.albumSongsToggleOnIv.setOnClickListener {
+            setToggleStatus(true)
+        }
+
+
         binding.songLilacLayout.setOnClickListener {
             Toast.makeText(activity,"LILAC", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root
+    }
+
+    fun setToggleStatus(isOn : Boolean){
+        if(isOn){
+            binding.albumSongsToggleOnIv.visibility = View.GONE
+            binding.albumSongsToggleOffIv.visibility = View.VISIBLE
+        }
+        else{
+            binding.albumSongsToggleOnIv.visibility = View.VISIBLE
+            binding.albumSongsToggleOffIv.visibility = View.GONE
+        }
     }
 }
