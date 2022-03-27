@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/video_newest_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최신순"
+            android:textSize="10sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="3dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/video_sort_iv"/>
+
+        <ImageView
+            android:id="@+id/video_sort_iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/btn_sort_newer"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintTop_toTopOf="@+id/video_newest_tv"
+            app:layout_constraintBottom_toBottomOf="@+id/video_newest_tv"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/video_coin_movie_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_newest_tv">
+
+            <ImageView
+                android:id="@+id/video_coin_movie_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/coin_movie_img"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:id="@+id/video_coin_movie_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[MV] Coin"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:paddingVertical="7dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/video_coin_movie_information_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아이유 (IU) | 2021.03.26"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toStartOf="@+id/video_coin_movie_title_tv"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/video_lilac_movie_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_coin_movie_layout">
+
+            <ImageView
+                android:id="@+id/video_lilac_movie_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lilac_movie_img"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:id="@+id/video_lilac_movie_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[MV] 라일락 (LILAC)"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:paddingVertical="7dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/video_coin_lilac_information_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아이유 (IU) | 2021.03.25"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toStartOf="@+id/video_coin_movie_title_tv"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
