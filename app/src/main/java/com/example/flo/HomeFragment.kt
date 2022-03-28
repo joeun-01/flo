@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.homeAlbumImgIv1.setOnClickListener {
+        binding.homeTodayMusicAlbum01Iv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,
                 AlbumFragment()
             ).commitAllowingStateLoss()
@@ -30,6 +30,11 @@ class HomeFragment : Fragment() {
         bannerAdapter.addFragment(BannerFragment())
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        var homePannel01Adapter = Homepanner01VPAdapter(this)
+        homePannel01Adapter.addFragment(Homepannel01Fragment())
+        binding.homePannel01Vp.adapter = homePannel01Adapter
+        binding.homePannel01Vp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return binding.root
     }
