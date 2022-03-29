@@ -6,20 +6,20 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/home_pannel1_background_iv"
+        android:id="@+id/home_pannel2_background_iv"
         android:layout_width="match_parent"
         android:layout_height="430dp"
-        android:src="@drawable/home_background1"
+        android:src="@drawable/home_background3"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/home_pannel1_title_tv"
+        android:id="@+id/home_pannel2_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="포근하게 덮어주는 꿈의 목소리"
+        android:text="잠들기 전, 온전히\n나만을 위한 시간"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -31,93 +31,93 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/home_pannel1_btn_play_iv"
+        android:id="@+id/home_pannel2_btn_play_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/btn_panel_play_large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/home_pannel1_title_tv"
-        app:layout_constraintBottom_toBottomOf="@+id/home_pannel1_title_tv" />
+        app:layout_constraintStart_toEndOf="@id/home_pannel2_title_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/home_pannel2_title_tv" />
 
     <TextView
-        android:id="@+id/home_pannel1_album_info_tv"
+        android:id="@+id/home_pannel2_album_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="총 15곡 2022.01.11"
+        android:text="총 18곡 2020.02.21"
         android:textColor="@color/white"
         android:textSize="12sp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@id/home_pannel1_album_img_01_iv"
+        app:layout_constraintBottom_toTopOf="@id/home_pannel2_album_img_01_iv"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
-        android:id="@+id/home_pannel1_album_img_01_iv"
+        android:id="@+id/home_pannel2_album_img_01_iv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/img_album_exp7"
+        android:src="@drawable/img_album_exp11"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/home_pannel1_album_img_02_iv"/>
+        app:layout_constraintBottom_toTopOf="@+id/home_pannel2_album_img_02_iv"/>
 
     <TextView
-        android:id="@+id/home_pannel1_album_title_01_tv"
+        android:id="@+id/home_pannel2_album_title_01_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="가을 아침"
+        android:text="Talking to the Moon"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/home_pannel1_album_img_01_iv"
-        app:layout_constraintBottom_toTopOf="@id/home_pannel1_album_singer_01_tv"
-        app:layout_constraintTop_toTopOf="@id/home_pannel1_album_img_01_iv"/>
+        app:layout_constraintStart_toEndOf="@id/home_pannel2_album_img_01_iv"
+        app:layout_constraintBottom_toTopOf="@id/home_pannel2_album_singer_01_tv"
+        app:layout_constraintTop_toTopOf="@id/home_pannel2_album_img_01_iv"/>
 
     <TextView
-        android:id="@+id/home_pannel1_album_singer_01_tv"
+        android:id="@+id/home_pannel2_album_singer_01_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아이유 (IU)"
+        android:text="Bruno Mars"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/home_pannel1_album_img_01_iv"
-        app:layout_constraintTop_toBottomOf="@id/home_pannel1_album_title_01_tv"
-        app:layout_constraintBottom_toBottomOf="@id/home_pannel1_album_img_01_iv"/>
+        app:layout_constraintStart_toEndOf="@id/home_pannel2_album_img_01_iv"
+        app:layout_constraintTop_toBottomOf="@id/home_pannel2_album_title_01_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_pannel2_album_img_01_iv"/>
 
     <ImageView
-        android:id="@+id/home_pannel1_album_img_02_iv"
+        android:id="@+id/home_pannel2_album_img_02_iv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/img_album_exp8"
+        android:src="@drawable/img_album_exp12"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/home_pannel1_background_iv"/>
+        app:layout_constraintBottom_toBottomOf="@+id/home_pannel2_background_iv"/>
 
     <TextView
-        android:id="@+id/home_pannel1_album_title_02_tv"
+        android:id="@+id/home_pannel2_album_title_02_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="스토커"
+        android:text="How Far I'll Go"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/home_pannel1_album_img_02_iv"
-        app:layout_constraintBottom_toTopOf="@id/home_pannel1_album_singer_02_tv"
-        app:layout_constraintTop_toTopOf="@id/home_pannel1_album_img_02_iv"/>
+        app:layout_constraintStart_toEndOf="@id/home_pannel2_album_img_02_iv"
+        app:layout_constraintBottom_toTopOf="@id/home_pannel2_album_singer_02_tv"
+        app:layout_constraintTop_toTopOf="@id/home_pannel2_album_img_02_iv"/>
 
     <TextView
-        android:id="@+id/home_pannel1_album_singer_02_tv"
+        android:id="@+id/home_pannel2_album_singer_02_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10cm"
+        android:text="Auli'i Cravalho"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/home_pannel1_album_img_02_iv"
-        app:layout_constraintTop_toBottomOf="@id/home_pannel1_album_title_02_tv"
-        app:layout_constraintBottom_toBottomOf="@id/home_pannel1_album_img_02_iv"/>
+        app:layout_constraintStart_toEndOf="@id/home_pannel2_album_img_02_iv"
+        app:layout_constraintTop_toBottomOf="@id/home_pannel2_album_title_02_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_pannel2_album_img_02_iv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -218,12 +218,12 @@
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/img_album_exp4"/>
+                        android:src="@drawable/img_album_exp13"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="작은 것들을 위한 시 (Boy With Luv)"
+                        android:text="TOMBOY"
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         android:layout_marginTop="10dp"/>
@@ -231,7 +231,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="방탄소년단"
+                        android:text="(여자)아이들"
                         android:textSize="13sp"
                         android:textColor="#a8a8a8"
                         android:layout_marginTop="3dp" />

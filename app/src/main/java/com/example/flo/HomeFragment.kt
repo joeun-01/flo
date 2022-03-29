@@ -28,12 +28,15 @@ class HomeFragment : Fragment() {
 
         val bannerAdapter = BannerVPAdapter(this)
         bannerAdapter.addFragment(BannerFragment())
+        bannerAdapter.addFragment(Banner2Fragment())
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        var homePannel01Adapter = Homepanner01VPAdapter(this)
-        homePannel01Adapter.addFragment(Homepannel01Fragment())
-        binding.homePannel01Vp.adapter = homePannel01Adapter
+        var homePannelAdapter = HomepannerVPAdapter(this)
+        homePannelAdapter.addFragment(Homepannel01Fragment())
+        homePannelAdapter.addFragment(Homepannel02Fragment())
+        homePannelAdapter.addFragment(Homepannel03Fragment())
+        binding.homePannel01Vp.adapter = homePannelAdapter
         binding.homePannel01Vp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return binding.root

@@ -3,7 +3,7 @@ package com.example.flo
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class Homepanner01VPAdapter (fragment : Fragment) : FragmentStateAdapter(fragment) {
+class HomepannerVPAdapter (fragment : Fragment) : FragmentStateAdapter(fragment) {
     private val fragmentlist : ArrayList<Fragment> = java.util.ArrayList()
 
     override fun getItemCount(): Int = fragmentlist.size
