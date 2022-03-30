@@ -9,12 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/home_pannel_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:tabBackground="@drawable/tablayout_round_indicator"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_pannel_vp"/>
+
+
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/home_pannel_01_vp"
+            android:id="@+id/home_pannel_vp"
             android:layout_width="match_parent"
             android:layout_height="430dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +71,7 @@
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_pannel_01_vp" />
+            app:layout_constraintTop_toBottomOf="@+id/home_pannel_tb" />
 
         <ImageView
             android:id="@+id/home_today_music_title_btn_iv"
@@ -77,12 +88,12 @@
             android:id="@+id/home_today_music_total_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:text="종합"
             android:textColor="#3F3FFF"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/home_pannel_01_vp"
+            app:layout_constraintTop_toTopOf="@+id/home_today_music_title_tv"
+            app:layout_constraintBottom_toBottomOf="@+id/home_today_music_title_tv"
             app:layout_constraintEnd_toStartOf="@+id/home_today_music_domestic_tv"/>
 
         <TextView
@@ -94,6 +105,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintTop_toTopOf="@+id/home_today_music_total_tv"
+            app:layout_constraintBottom_toBottomOf="@+id/home_today_music_total_tv"
             app:layout_constraintEnd_toStartOf="@+id/home_today_music_oversea_tv"/>
 
         <TextView
@@ -105,6 +117,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintTop_toTopOf="@+id/home_today_music_total_tv"
+            app:layout_constraintBottom_toBottomOf="@+id/home_today_music_total_tv"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <HorizontalScrollView

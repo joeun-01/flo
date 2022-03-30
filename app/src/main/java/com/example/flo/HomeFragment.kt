@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.flo.com.example.flo.AlbumFragment
 import com.example.flo.databinding.FragmentHomeBinding
+import com.google.android.material.tabs.TabLayoutMediator
+
 
 class HomeFragment : Fragment() {
 
@@ -32,12 +34,17 @@ class HomeFragment : Fragment() {
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        var homePannelAdapter = HomepannerVPAdapter(this)
+        val homePannelAdapter = HomepannerVPAdapter(this)
         homePannelAdapter.addFragment(Homepannel01Fragment())
         homePannelAdapter.addFragment(Homepannel02Fragment())
         homePannelAdapter.addFragment(Homepannel03Fragment())
-        binding.homePannel01Vp.adapter = homePannelAdapter
-        binding.homePannel01Vp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.homePannelVp.adapter = homePannelAdapter
+        binding.homePannelVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        TabLayoutMediator(binding.homePannelTb, binding.homePannelVp) {
+                tab, position ->
+        }.attach()
+
 
         return binding.root
     }

@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable-v24/viewpager_selected_indicator.xml" value="0.1895" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/btm_color_selector.xml" value="0.226" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1755" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/main_btm_home_selector.xml" value="0.1755" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/tablayout_round_indicator.xml" value="0.1895" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/textview_background_radius.xml" value="0.1755" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/viewpager_indicator.xml" value="0.1895" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/viewpager_selected_indicator.xml" value="0.193" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_song.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/fragment_album.xml" value="0.264" />
