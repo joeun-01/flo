@@ -164,28 +164,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/song_like_iv_layout"/>
 
-<!--    <View-->
-<!--        android:id/song_progressbar_background_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="2dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:background="@color/gray_color"-->
-<!--        app:layout_constraintEnd_toEndOf"parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/song_like_iv_layout"/>-->
-
-<!--    <View-->
-<!--        android:id/song_progressbar_view"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="2dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:background="@color/select_color"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/song_progress_background_view"-->
-<!--        app:layout_constraintStart_toStartOf"parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/song_progress_background_view"/>-->
-
     <TextView
         android:id="@+id/song_start_time_tv"
         android:layout_width="wrap_content"

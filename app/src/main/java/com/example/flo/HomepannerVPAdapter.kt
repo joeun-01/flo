@@ -4,15 +4,15 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class HomepannerVPAdapter (fragment : Fragment) : FragmentStateAdapter(fragment) {
-    private val fragmentlist : ArrayList<Fragment> = java.util.ArrayList()
+    private val fragmentList : ArrayList<Fragment> = java.util.ArrayList()
 
-    override fun getItemCount(): Int = fragmentlist.size
+    override fun getItemCount(): Int = fragmentList.size
 
-    override fun createFragment(position: Int): Fragment = fragmentlist[position]
+    override fun createFragment(position: Int): Fragment = fragmentList[position]
 
     fun addFragment(fragment : Fragment) {
-        fragmentlist.add(fragment)
-        notifyItemInserted(fragmentlist.size - 1)
+        fragmentList.add(fragment)
+        notifyItemInserted(fragmentList.size - 1)
     }
 
 }

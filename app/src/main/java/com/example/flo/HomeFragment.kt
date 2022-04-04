@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.flo.com.example.flo.AlbumFragment
+import com.example.flo.AlbumFragment
 import com.example.flo.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -44,8 +44,31 @@ class HomeFragment : Fragment() {
         TabLayoutMediator(binding.homePannelTb, binding.homePannelVp) {
                 tab, position ->
         }.attach()
+//
+//        val handler = Handler(Looper.getMainLooper()){
+//            setPage()
+//            true
+//        }
+//
+//        var thread = Thread(scrollView())
+//        thread.start()
 
 
         return binding.root
     }
+//
+//    fun setPage(){
+//        if(currentPanel == 3){
+//            currentPanel = 0
+//        }
+//        binding.homePannelVp.setCurrentItem(currentPanel, true)
+//        currentPanel+=1
+//    }
+//
+//    inner class scrollView : Runnable{
+//        override fun run() {
+//            Thread.sleep(2000)
+//
+//        }
+//    }
 }
