@@ -120,37 +120,16 @@
 
         <TextView
             android:id="@+id/detail_introduce_title_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="'아이유(IU)' 정규 5집 [LILAC]"
+            android:text="@string/LILIC_album_introduce"
             android:textSize="15sp"
             android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_introduce_tv"/>
-
-        <TextView
-            android:id="@+id/detail_introduce_content_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="&quot;안녕 꽃잎같은 안녕&quot;\n&quot;내 맘에 아무 의문이 없어 난 이 다음으로 가요&quot;"
-            android:textSize="15sp"
-            android:layout_marginTop="25dp"
-            app:layout_constraintStart_toStartOf="@id/detail_introduce_title_tv"
-            app:layout_constraintTop_toBottomOf="@+id/detail_introduce_title_tv"/>
-
-        <TextView
-            android:id="@+id/detail_introduce_content2_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="20대의 마지막에 대해 화려한 인사를 예고했던 아이유가 봄\n내음과 함께 다섯 번째 정규앨범 [LILAC]으로 돌아왔다."
-            android:textSize="15sp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintStart_toStartOf="@id/detail_introduce_title_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_introduce_content_tv"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/detail_introduce_tv"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

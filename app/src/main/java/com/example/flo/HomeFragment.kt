@@ -1,12 +1,14 @@
 package com.example.flo
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.flo.AlbumFragment
 import com.example.flo.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -14,6 +16,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
+    lateinit var slide : AutoSlide
+    private var position : Int = 0
+
+    val handler = Handler(Looper.getMainLooper()){
+        setPage()
+        true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,33 +51,35 @@ class HomeFragment : Fragment() {
         binding.homePannelVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         TabLayoutMediator(binding.homePannelTb, binding.homePannelVp) {
-                tab, position ->
+            tab, position ->
         }.attach()
-//
-//        val handler = Handler(Looper.getMainLooper()){
-//            setPage()
-//            true
-//        }
-//
-//        var thread = Thread(scrollView())
-//        thread.start()
 
+        slide = AutoSlide()
+        slide.start()
 
         return binding.root
     }
-//
-//    fun setPage(){
-//        if(currentPanel == 3){
-//            currentPanel = 0
-//        }
-//        binding.homePannelVp.setCurrentItem(currentPanel, true)
-//        currentPanel+=1
-//    }
-//
-//    inner class scrollView : Runnable{
-//        override fun run() {
-//            Thread.sleep(2000)
-//
-//        }
-//    }
+
+    private fun setPage(){
+        if(position == 3){
+            position = 0
+        }
+        binding.homePannelVp.setCurrentItem(position, false)
+        position++
+    }
+
+    inner class AutoSlide : Thread(){
+        override fun run() {
+            while (true){
+                try {
+                    Thread.sleep(2000)
+                    handler.sendEmptyMessage(0)
+                }
+                catch(e : InterruptedException){
+                    Log.d("자동 슬라이드", "interrupt 발생")
+                }
+            }
+        }
+    }
+
 }
