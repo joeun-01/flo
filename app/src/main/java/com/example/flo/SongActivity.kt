@@ -21,7 +21,6 @@ class SongActivity : AppCompatActivity()   {
         setContentView(binding.root)
 
         initSong()  // main에서 값 받아오기
-        setPlayer(song)  // SongActivity에 적용
 
         binding.songDownIb.setOnClickListener {  // 다시 mainActivity로 돌아감
             finish()
@@ -59,12 +58,24 @@ class SongActivity : AppCompatActivity()   {
     override fun onStart() {  // 다시 SongActivity로 돌아왔을 때 할 작업
         super.onStart()
 
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // SongActivity에서 저장한 song을 불러옴
+        val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
+
+        song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
+            Song("라일락","아이유(IU)", 0, 60, false, "music_lilac")
+        } else{
+            gson.fromJson(songJson, Song::class.java)
+        }
+
+        startTimer()
+        setPlayer(song)
     }
 
     // 사용자가 focus를 잃었을 때 음악이 중지 (다른 activity가 실행되거나 앱이 잠시 background로 갔을 때)
     override fun onPause() {
         super.onPause()
-        setPlayerStatus(song.isPlaying)  // 재생 상태는 유지
+        timer.interrupt()
+
         song.second = ((binding.songProgressSb.progress * song.playTime)/100)/1000
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
@@ -72,6 +83,8 @@ class SongActivity : AppCompatActivity()   {
         editor.putString("songData", songJson)
 
         editor.apply()  // 내부 저장소에 값 저장
+
+        mediaPlayer?.pause()
     }
 
     override fun onDestroy() {  // 앱이 아예 종료됐을 때
@@ -92,7 +105,6 @@ class SongActivity : AppCompatActivity()   {
                 intent.getStringExtra("music")!!
             )
         }
-        startTimer()
     }
 
     private fun setPlayer(song : Song){  // 받아온 값 적용
@@ -100,12 +112,15 @@ class SongActivity : AppCompatActivity()   {
         binding.songSignerNameTv.text = intent.getStringExtra("singer")!!
         binding.songStartTimeTv.text = String.format("%02d:%02d", song.second / 60, song.second % 60)
         binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime / 60, song.playTime % 60)
-        binding.songProgressSb.progress = (song.second * 1000 / song.playTime)
-        var music = resources.getIdentifier(song.music, "raw", this.packageName)  // 노래를 재생할 mediaPlayer 객체 생성
-        mediaPlayer = MediaPlayer.create(this, music)
+        binding.songProgressSb.progress = (song.second * 100000)/song.playTime
+
+        if(mediaPlayer == null){
+            var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
+            mediaPlayer = MediaPlayer.create(this, music)
+        }
         mediaPlayer?.seekTo(binding.songProgressSb.progress)  // seekbar 위치부터 재생
 
-        setPlayerStatus(song.isPlaying)  // Song.DataClass에 저장된 값으로 재생 설정
+        setPlayerStatus(song.isPlaying)  // song의 Boolean 값을 따름
     }
 
     private fun setPlayerStatus(isPlaying : Boolean) {  // 재생, 일지정지 관리
@@ -164,19 +179,23 @@ class SongActivity : AppCompatActivity()   {
     private fun restartTimer(){  // 타이머 thread 재시작
         timer.interrupt()  // 이전 thread를 종료
         mediaPlayer?.reset()  // 노래도 시작으로 되돌아감
-        initSong()  // 재시작
+        song.second = 0
+        song.isPlaying = false  // 재생 상태도 일지정지 상태로 설정
+        startTimer()  // 재시작
         setPlayer(song)
     }
 
     inner class Timer(private val playTime : Int, var isPlaying : Boolean = true) : Thread() {  // 타이머 thread
-        private var second : Int = 0
-        private var mills : Float = 0f
+        private var second : Int = song.second
+        private var mills : Float = second.toFloat() * 1000
 
         override fun run() {
             super.run()
             try{
                 while(true){
                     if(second >= playTime){  // 시간이 다 되면 종료
+                        mediaPlayer?.reset()
+                        setPlayerStatus(false)
                         break
                     }
 
@@ -202,4 +221,5 @@ class SongActivity : AppCompatActivity()   {
 
         }
     }
+
 }
