@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.flo.databinding.ActivitySongBinding
 import com.google.gson.Gson
 
+
 class SongActivity : AppCompatActivity()   {
 
     lateinit var binding: ActivitySongBinding
@@ -83,8 +84,12 @@ class SongActivity : AppCompatActivity()   {
         editor.putString("songData", songJson)
 
         editor.apply()  // 내부 저장소에 값 저장
+    }
 
-        mediaPlayer?.pause()
+    override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
+        super.onStop()
+
+        mediaPlayer?.stop()
     }
 
     override fun onDestroy() {  // 앱이 아예 종료됐을 때
@@ -114,10 +119,9 @@ class SongActivity : AppCompatActivity()   {
         binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime / 60, song.playTime % 60)
         binding.songProgressSb.progress = (song.second * 100000)/song.playTime
 
-        if(mediaPlayer == null){
-            var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
-            mediaPlayer = MediaPlayer.create(this, music)
-        }
+        var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
+        mediaPlayer = MediaPlayer.create(this, music)
+
         mediaPlayer?.seekTo(binding.songProgressSb.progress)  // seekbar 위치부터 재생
 
         setPlayerStatus(song.isPlaying)  // song의 Boolean 값을 따름

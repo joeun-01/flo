@@ -24,15 +24,15 @@ class MainActivity : AppCompatActivity() {
         true
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {  // 최초 실행 시 해야할 작업들
         super.onCreate(savedInstanceState)
 
-        setTheme(R.style.Theme_FLO)
+        setTheme(R.style.Theme_FLO)  // splash 화면이 끝나면 MainActivity 화면을 띄워주어야 함
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.mainPlayerCl.setOnClickListener {
+        binding.mainPlayerCl.setOnClickListener {  // SongActivity로 전환
             //startActivity(Intent(this, SongActivity::class.java))
             val intent = Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
+    override fun onStart() {  // 다시 MainActivity로 돌아왔을 때 할 작업
         super.onStart()
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // SongActivity에서 저장한 song을 불러옴
         val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
@@ -83,8 +83,12 @@ class MainActivity : AppCompatActivity() {
         editor.putString("songData", songJson)
 
         editor.apply()  // 내부 저장소에 값 저장
+    }
 
-        mediaPlayer?.pause()
+    override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
+        super.onStop()
+
+        mediaPlayer?.stop()
     }
 
     override fun onDestroy() {
@@ -115,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainBnv.setOnItemSelectedListener{ item ->
             when (item.itemId) {
 
-                R.id.homeFragment -> {
+                R.id.homeFragment -> {  // home 화면 실행
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, HomeFragment())
                         .commitAllowingStateLoss()
@@ -129,13 +133,13 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.searchFragment -> {
+                R.id.searchFragment -> {  // 검색 화면 실행
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, SearchFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
-                R.id.lockerFragment -> {
+                R.id.lockerFragment -> {  // 보관함 화면 실행
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, LockerFragment())
                         .commitAllowingStateLoss()
@@ -147,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setPlayerStatus(isPlaying : Boolean){  // 재생 여부 관리
-        song.isPlaying = isPlaying
+        song.isPlaying = isPlaying  // play 여부 동기화
         progress.isPlaying = isPlaying
 
         if(isPlaying){
@@ -164,27 +168,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMiniPlayer(song : Song){
+    private fun setMiniPlayer(song : Song){  // miniPlayer 초기화
         binding.mainMiniplayerTitleTv.text = song.title
         binding.mainMiniplayerSingerTv.text = song.singer
         binding.mainProgressSb.progress = (song.second * 100000)/song.playTime
 
-        if(mediaPlayer == null){
-            var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
-            mediaPlayer = MediaPlayer.create(this, music)
-        }
+        var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
+        mediaPlayer = MediaPlayer.create(this, music)
+
         mediaPlayer?.seekTo(binding.mainProgressSb.progress)
 
         setPlayerStatus(song.isPlaying)
     }
 
 
-    private fun startProgress(){
-        progress = Progress(song.playTime, song.isPlaying)
+    private fun startProgress(){  // Progress thread 시작작
+       progress = Progress(song.playTime, song.isPlaying)
         progress.start()
     }
 
-    private fun progressBar(){  // UI는 main thread에서 변경
+    private fun progressBar(){  // UI는 main Thread에서 변경
         binding.mainProgressSb.progress = ((progress.mills / song.playTime) * 100).toInt()
     }
 
