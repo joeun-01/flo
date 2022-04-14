@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("playTime", song.playTime)
             intent.putExtra("isPlaying", song.isPlaying)
             intent.putExtra("music", song.music)
+            intent.putExtra("current", song.current)
             startActivity(intent)
         }
 
@@ -76,7 +77,12 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         progress.interrupt()
+
         song.second = ((binding.mainProgressSb.progress * song.playTime)/100)/1000
+
+        mediaPlayer?.stop()
+        song.current = mediaPlayer!!.currentPosition
+
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
         val songJson = gson.toJson(song)  // Json 객체 생성
@@ -88,7 +94,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
         super.onStop()
 
-        mediaPlayer?.stop()
     }
 
     override fun onDestroy() {
@@ -98,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer = null  // 미디어 플레이어 해제
 
         progress.interrupt()
-        song.second = 0
+        //song.second = 0
         song.isPlaying = false
 
 
@@ -176,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
         mediaPlayer = MediaPlayer.create(this, music)
 
-        mediaPlayer?.seekTo(binding.mainProgressSb.progress)
+        mediaPlayer?.seekTo(song.current)
 
         setPlayerStatus(song.isPlaying)
     }

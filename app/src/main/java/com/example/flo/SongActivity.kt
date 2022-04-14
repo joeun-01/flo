@@ -78,6 +78,10 @@ class SongActivity : AppCompatActivity()   {
         timer.interrupt()
 
         song.second = ((binding.songProgressSb.progress * song.playTime)/100)/1000
+
+        mediaPlayer?.stop()
+        song.current = mediaPlayer!!.currentPosition
+
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
         val songJson = gson.toJson(song)  // Json 객체 생성
@@ -89,7 +93,6 @@ class SongActivity : AppCompatActivity()   {
     override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
         super.onStop()
 
-        mediaPlayer?.stop()
     }
 
     override fun onDestroy() {  // 앱이 아예 종료됐을 때
@@ -107,7 +110,8 @@ class SongActivity : AppCompatActivity()   {
                 intent.getIntExtra("second", 0),
                 intent.getIntExtra("playTime",0),
                 intent.getBooleanExtra("isPlaying", false),
-                intent.getStringExtra("music")!!
+                intent.getStringExtra("music")!!,
+                intent.getIntExtra("current", 0)
             )
         }
     }
@@ -122,7 +126,7 @@ class SongActivity : AppCompatActivity()   {
         var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
         mediaPlayer = MediaPlayer.create(this, music)
 
-        mediaPlayer?.seekTo(binding.songProgressSb.progress)  // seekbar 위치부터 재생
+        mediaPlayer?.seekTo(song.current)  // seekbar 위치부터 재생
 
         setPlayerStatus(song.isPlaying)  // song의 Boolean 값을 따름
     }
