@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/save_select_all_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/btn_playlist_select_off"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/save_select_all_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전체선택"
+        android:textSize="15sp"
+        android:layout_marginStart="3dp"
+        app:layout_constraintTop_toTopOf="@+id/save_select_all_iv"
+        app:layout_constraintBottom_toBottomOf="@id/save_select_all_iv"
+        app:layout_constraintStart_toEndOf="@+id/save_select_all_iv"/>
+
+    <ImageView
+        android:id="@+id/save_listen_all_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/icon_browse_arrow_right"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="@id/save_select_all_iv"
+        app:layout_constraintBottom_toBottomOf="@+id/save_select_all_iv"
+        app:layout_constraintStart_toEndOf="@+id/save_select_all_tv"/>
+
+    <TextView
+        android:id="@+id/save_listen_all_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전체듣기"
+        android:textSize="15sp"
+        android:layout_marginStart="3dp"
+        app:layout_constraintTop_toTopOf="@+id/save_select_all_iv"
+        app:layout_constraintBottom_toBottomOf="@id/save_select_all_iv"
+        app:layout_constraintStart_toEndOf="@+id/save_listen_all_iv"/>
+
+    <TextView
+        android:id="@+id/save_edit_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="편집"
+        android:textSize="15sp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="@+id/save_select_all_iv"
+        app:layout_constraintBottom_toBottomOf="@+id/save_select_all_iv"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/save_song_list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/item_save"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/save_select_all_iv"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/download_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="저장한 곡이 없습니다."-->
+<!--        android:textSize="20sp"-->
+<!--        android:textColor="@color/gray_color"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"/>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

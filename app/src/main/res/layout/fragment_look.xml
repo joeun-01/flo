@@ -14,14 +14,14 @@
             android:id="@+id/look_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
             android:text="둘러보기"
-            android:textColor="#000000"
-            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="55dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <HorizontalScrollView
             android:id="@+id/look_chip_scroll_hs"

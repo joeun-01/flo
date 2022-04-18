@@ -1,7 +1,6 @@
 package com.example.flo
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStateManagerControl
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class LockerVPAdapter (fragment : Fragment) : FragmentStateAdapter(fragment) {
@@ -9,7 +8,7 @@ class LockerVPAdapter (fragment : Fragment) : FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0 -> DownloadFragment()
+            0 -> SaveFragment()
             else -> SongfileFragment()
         }
     }
