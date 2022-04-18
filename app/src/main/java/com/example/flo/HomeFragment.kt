@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.flo.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 
 
 class HomeFragment : Fragment() {
@@ -21,7 +23,7 @@ class HomeFragment : Fragment() {
     private var albumDatas = ArrayList<Album>()
 
     val handler = Handler(Looper.getMainLooper()){
-        setPage()
+        setPage()  // message를 받으면 page를 넘김
         true
     }
 
@@ -32,13 +34,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-//        binding.homeTodayMusicAlbum01Iv.setOnClickListener {
-//            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,
-//                AlbumFragment()
-//            ).commitAllowingStateLoss()
-//        }
-
-        albumDatas.apply {
+        albumDatas.apply {  // recycler view를 위한 더미데이터
             add(Album("TOMBOY", "(여자)아이들", R.drawable.img_album_exp13))
             add(Album("Lilac", "아이유 (IU)", R.drawable.img_album_exp2))
             add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3))
@@ -47,30 +43,60 @@ class HomeFragment : Fragment() {
             add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6))
         }
 
+        // RecyclerView 어뎁터 연결
+        val albumRVAdapter = AlbumRVAdapter(albumDatas)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
+        // LayoutManager를 통해 Layout 설정
+        binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false)
+
+        albumRVAdapter.setMyItemClickListener(object : AlbumRVAdapter.MyItemClickListener{
+            override fun onItemClick(album: Album) {
+                changeAlbumFragment(album)
+            }
+
+            override fun onRemoveAlbum(position: Int) {
+                albumRVAdapter.removeItem(position)
+            }
+        })
+
+        // 배너 ViewPager 어뎁터 연결
         val bannerAdapter = BannerVPAdapter(this)
         bannerAdapter.addFragment(BannerFragment())
         bannerAdapter.addFragment(Banner2Fragment())
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
+        // 패널 ViewPager 어뎁터 연결
         val homePannelAdapter = HomepannerVPAdapter(this)
-        homePannelAdapter.addFragment(Homepannel01Fragment())
+        homePannelAdapter.addFragment(Homepannel01Fragment())  // 패널 fragment 추가
         homePannelAdapter.addFragment(Homepannel02Fragment())
         homePannelAdapter.addFragment(Homepannel03Fragment())
         binding.homePannelVp.adapter = homePannelAdapter
         binding.homePannelVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        TabLayoutMediator(binding.homePannelTb, binding.homePannelVp) {
-            tab, position ->
+        TabLayoutMediator(binding.homePannelTb, binding.homePannelVp) {  // ViewPager와 TabLayout 연결
+            tab, position ->  // Tab
         }.attach()
 
-        slide = AutoSlide()
+        slide = AutoSlide()  // ViewPager thread 시작
         slide.start()
 
         return binding.root
     }
 
-    private fun setPage(){
+    private fun changeAlbumFragment(album: Album) {  // fragment를 전환하면서 Album 데이터를 넘겨줌
+        (context as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    val gson = Gson()
+                    val albumJson = gson.toJson(album)
+                    putString("album", albumJson)
+                }
+            })
+            .commitAllowingStateLoss()
+    }
+
+    private fun setPage(){  // page를 넘겨주는 함수
         if(position == 3){
             position = 0
         }
@@ -78,12 +104,12 @@ class HomeFragment : Fragment() {
         position++
     }
 
-    inner class AutoSlide : Thread(){
+    inner class AutoSlide : Thread(){  // 자동 슬라이드를 위한 thread
         override fun run() {
             while (true){
                 try {
                     Thread.sleep(2000)
-                    handler.sendEmptyMessage(0)
+                    handler.sendEmptyMessage(0)  // handler에 message를 보냄
                 }
                 catch(e : InterruptedException){
                     Log.d("자동 슬라이드", "interrupt 발생")
