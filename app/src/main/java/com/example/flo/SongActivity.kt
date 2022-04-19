@@ -63,7 +63,7 @@ class SongActivity : AppCompatActivity()   {
         val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
 
         song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
-            Song("라일락","아이유(IU)", 0, 60, false, "music_lilac")
+            Song("라일락","아이유(IU)", R.drawable.img_album_exp2,0, 60, false, "music_lilac")
         } else{
             gson.fromJson(songJson, Song::class.java)
         }
@@ -109,6 +109,7 @@ class SongActivity : AppCompatActivity()   {
                 intent.getStringExtra("singer")!!,
                 intent.getIntExtra("second", 0),
                 intent.getIntExtra("playTime",0),
+                intent.getIntExtra("albumImg", R.drawable.img_album_exp2),
                 intent.getBooleanExtra("isPlaying", false),
                 intent.getStringExtra("music")!!,
                 intent.getIntExtra("current", 0)
@@ -119,6 +120,7 @@ class SongActivity : AppCompatActivity()   {
     private fun setPlayer(song : Song){  // 받아온 값 적용
         binding.songMusicTitleTv.text = intent.getStringExtra("title")!!
         binding.songSignerNameTv.text = intent.getStringExtra("singer")!!
+        song.albumImg?.let { binding.songAlbumIv.setImageResource(it) }
         binding.songStartTimeTv.text = String.format("%02d:%02d", song.second / 60, song.second % 60)
         binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime / 60, song.playTime % 60)
         binding.songProgressSb.progress = (song.second * 100000)/song.playTime
@@ -202,9 +204,9 @@ class SongActivity : AppCompatActivity()   {
             try{
                 while(true){
                     if(second >= playTime){  // 시간이 다 되면 종료
-                        mediaPlayer?.reset()
-                        setPlayerStatus(false)
-                        break
+                        runOnUiThread{
+                            restartTimer()
+                        }
                     }
 
                     if(isPlaying){  // 재생상태일 때

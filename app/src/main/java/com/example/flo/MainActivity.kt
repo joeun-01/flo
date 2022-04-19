@@ -19,8 +19,19 @@ class MainActivity : AppCompatActivity() {
     private var song : Song = Song()
     private var gson : Gson = Gson()
 
-    var handler = Handler(Looper.getMainLooper()) {  // progress bar를 업데이트하기 위한 핸들러
+    var progressHandler = Handler(Looper.getMainLooper()) {  // progress bar를 업데이트하기 위한 핸들러
         progressBar()
+        true
+    }
+
+    var resetHandler = Handler(Looper.getMainLooper()){  // 재생이 끝나면 다시 처음으로 되돌아가기 위한 핸들러
+        binding.mainProgressSb.progress = 0  // 초기화
+        mediaPlayer?.reset()
+        setPlayerStatus(false)
+
+        var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 다시 생성
+        mediaPlayer = MediaPlayer.create(this, music)
+
         true
     }
 
@@ -37,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
             intent.putExtra("singer", song.singer)
+            intent.putExtra("albumImg", song.albumImg)
             intent.putExtra("second", song.second)
             intent.putExtra("playTime", song.playTime)
             intent.putExtra("isPlaying", song.isPlaying)
@@ -64,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
 
         song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
-            Song("라일락","아이유(IU)", 0, 60, false, "music_lilac")
+            Song("라일락","아이유(IU)", R.drawable.img_album_exp2,0, 60, false, "music_lilac")
         } else{
             gson.fromJson(songJson, Song::class.java)
         }
@@ -107,12 +119,12 @@ class MainActivity : AppCompatActivity() {
         song.isPlaying = false
 
 
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        val songJson = gson.toJson(song)  // Json 객체 생성
-        editor.putString("songData", songJson)
-
-        editor.apply()  // 내부 저장소에 값 저장
+//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+//        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+//        val songJson = gson.toJson(song)  // Json 객체 생성
+//        editor.putString("songData", songJson)
+//
+//        editor.apply()  // 내부 저장소에 값 저장
     }
 
     private fun initBottomNavigation(){
@@ -181,8 +193,8 @@ class MainActivity : AppCompatActivity() {
         var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
         mediaPlayer = MediaPlayer.create(this, music)
 
+        // SongActivity와 재생 상태 동기화
         mediaPlayer?.seekTo(song.current)
-
         setPlayerStatus(song.isPlaying)
     }
 
@@ -205,7 +217,7 @@ class MainActivity : AppCompatActivity() {
             try{
                 while(true){
                     if(second >= playTime){
-                        mediaPlayer?.reset()
+                        resetHandler.sendEmptyMessage(1)
                         break
                     }
 
@@ -216,7 +228,7 @@ class MainActivity : AppCompatActivity() {
                         if(mills % 1000 == 0f){
                             second++
                         }
-                        handler.sendEmptyMessage(0)
+                        progressHandler.sendEmptyMessage(0)
                     }
                 }
             }

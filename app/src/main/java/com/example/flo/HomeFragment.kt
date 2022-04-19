@@ -21,6 +21,7 @@ class HomeFragment : Fragment() {
     lateinit var slide : AutoSlide
     private var position : Int = 0
     private var albumDatas = ArrayList<Album>()
+    private var songs = ArrayList<Song>()
 
     val handler = Handler(Looper.getMainLooper()){
         setPage()  // message를 받으면 page를 넘김
