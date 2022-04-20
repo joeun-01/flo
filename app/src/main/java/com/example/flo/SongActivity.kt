@@ -3,6 +3,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flo.databinding.ActivitySongBinding
 import com.google.gson.Gson
@@ -54,6 +55,32 @@ class SongActivity : AppCompatActivity()   {
         binding.songRandomOnIv.setOnClickListener {
             setRandomStatus(false)
         }
+
+        binding.songProgressSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar : SeekBar?) {  // 터치 시작
+
+            }
+
+            override fun onProgressChanged(seekBar : SeekBar?, progress : Int, fromUser : Boolean) {  // 터치 중
+                if(fromUser){  // 사용자가 클릭하고 있을 때만 값 변경
+                    binding.songProgressSb.progress = seekBar!!.progress
+                }
+            }
+
+            override fun onStopTrackingTouch(seekBar : SeekBar?) {  // 터치 끝
+                // 변경된 값을 받아옴
+                binding.songProgressSb.progress = seekBar!!.progress
+                song.second = (seekBar!!.progress * song.playTime) / 100000
+                mediaPlayer?.seekTo(binding.songProgressSb.progress)
+
+                // 변경된 값을 UI에 적용
+                timer.interrupt()
+                startTimer()
+                binding.songStartTimeTv.text = String.format("%02d:%02d", song.second / 60, song.second % 60)
+
+                Log.d("progress 변경 완료", seekBar!!.progress.toString())
+            }
+        })
     }
 
     override fun onStart() {  // 다시 SongActivity로 돌아왔을 때 할 작업
@@ -188,9 +215,10 @@ class SongActivity : AppCompatActivity()   {
 
     private fun restartTimer(){  // 타이머 thread 재시작
         timer.interrupt()  // 이전 thread를 종료
-        mediaPlayer?.reset()  // 노래도 시작으로 되돌아감
+        mediaPlayer?.reset()  // 재생 상태 초기화
         song.second = 0
-        song.isPlaying = false  // 재생 상태도 일지정지 상태로 설정
+        song.current = 0
+        song.isPlaying = false  // 일지정지 상태로
         startTimer()  // 재시작
         setPlayer(song)
     }

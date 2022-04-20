@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import com.example.flo.databinding.ActivityMainBinding
 import com.google.gson.Gson
 
@@ -66,6 +67,31 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNavigation()
 
+        binding.mainProgressSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar : SeekBar?) {  // 터치 시작
+
+            }
+
+            override fun onProgressChanged(seekBar : SeekBar?, progress : Int, fromUser : Boolean) {  // 터치 중
+                if(fromUser){  // 사용자가 클릭하고 있을 때만 값 변경
+                    binding.mainProgressSb.progress = seekBar!!.progress
+                }
+            }
+
+            override fun onStopTrackingTouch(seekBar : SeekBar?) {  // 터치 끝
+                // 변경된 값을 받아옴
+                binding.mainProgressSb.progress = seekBar!!.progress
+                song.second = (seekBar!!.progress * song.playTime) / 100000
+                mediaPlayer?.seekTo(binding.mainProgressSb.progress)
+
+                // 변경된 값을 UI에 적용
+                progress.interrupt()
+                startProgress()
+
+                Log.d("progress 변경 완료", seekBar!!.progress.toString())
+            }
+        })
+
         Log.d("Song", song.title + song.singer)
 
     }
@@ -118,13 +144,13 @@ class MainActivity : AppCompatActivity() {
         //song.second = 0
         song.isPlaying = false
 
+        // MainActivity, SongActivity의 데이터를 저장하고 종료
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+        val songJson = gson.toJson(song)  // Json 객체 생성
+        editor.putString("songData", songJson)
 
-//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-//        val songJson = gson.toJson(song)  // Json 객체 생성
-//        editor.putString("songData", songJson)
-//
-//        editor.apply()  // 내부 저장소에 값 저장
+        editor.apply()  // 내부 저장소에 값 저장
     }
 
     private fun initBottomNavigation(){
