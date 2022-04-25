@@ -1,6 +1,7 @@
 package com.example.flo
 
 data class Song(
+    val order: String = "", // 수록곡 넘버
     val title : String = "",  // 제목
     val singer : String = "",  // 가수
     var albumImg : Int? = null,

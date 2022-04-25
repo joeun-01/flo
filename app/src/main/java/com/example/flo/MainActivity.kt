@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainPlayerCl.setOnClickListener {  // SongActivity로 전환
             //startActivity(Intent(this, SongActivity::class.java))
             val intent = Intent(this, SongActivity::class.java)
+            intent.putExtra("order", song.order)
             intent.putExtra("title", song.title)
             intent.putExtra("singer", song.singer)
             intent.putExtra("albumImg", song.albumImg)
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
 
         song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
-            Song("라일락","아이유(IU)", R.drawable.img_album_exp2,0, 60, false, "music_lilac")
+            Song("01","라일락","아이유(IU)", R.drawable.img_album_exp2,0, 60, false, "music_lilac")
         } else{
             gson.fromJson(songJson, Song::class.java)
         }
