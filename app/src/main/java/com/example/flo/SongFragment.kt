@@ -53,24 +53,12 @@ class SongFragment : Fragment() {
 
         songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
             override fun onItemClick(song: Song) {
-                //changeSongFragment(song)
+                
             }
         })
 
         return binding.root
     }
-
-//    private fun changeSongFragment(song: Song) {  // fragment를 전환하면서 Album 데이터를 넘겨줌
-//        (context as MainActivity).supportFragmentManager.beginTransaction()
-//            .replace(R.id.main_frm, SongFragment().apply {
-//                arguments = Bundle().apply {
-//                    val gson = Gson()
-//                    val songJson = gson.toJson(song)
-//                    putString("song", songJson)
-//                }
-//            })
-//            .commitAllowingStateLoss()
-//    }
 
     private fun setToggleStatus(isOn : Boolean){
         if(isOn){
