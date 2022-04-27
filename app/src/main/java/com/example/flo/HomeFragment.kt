@@ -61,6 +61,13 @@ class HomeFragment : Fragment() {
             }
         })
 
+        // 여기에서 SongAdapter를 선언하여 albumDatas의 songs<Song> 데이터를 통해서 SongFragment의 RecyclerView에 값을 채워줌
+        // 아주 중요함 (context)로 지정하면 되지 않을까 하는 생각
+        // 하지만 click event는 SongFragment에서 일어나기 때문에 SongFragment에서도 Adapter를 선언해줄 것
+        // Adapter에서 view binding이 일어나기 때문에 꼭 SongFragment에서 DataList를 구성하지 않아도 되지 않을까?
+        // 안되면 망함ㅎ
+
+
         // 배너 ViewPager 어뎁터 연결
         val bannerAdapter = BannerVPAdapter(this)
         bannerAdapter.addFragment(BannerFragment())

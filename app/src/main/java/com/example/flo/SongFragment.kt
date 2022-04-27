@@ -53,7 +53,7 @@ class SongFragment : Fragment() {
 
         songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
             override fun onItemClick(song: Song) {
-                
+
             }
         })
 
