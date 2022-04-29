@@ -8,11 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.flo.databinding.FragmentHomeBinding
+import com.example.flo.databinding.FragmentSongBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 
@@ -20,9 +19,11 @@ import com.google.gson.Gson
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
-    lateinit var slide : AutoSlide
+    lateinit var songBinding : FragmentSongBinding
+    private lateinit var slide : AutoSlide
     private var position : Int = 0
     private var albumDatas = ArrayList<Album>()
+    private var songs = ArrayList<Song>()
 
     val handler = Handler(Looper.getMainLooper()){
         setPage()  // message를 받으면 page를 넘김
@@ -35,14 +36,26 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        songBinding = FragmentSongBinding.inflate(inflater, container, false)
+
+        songs.apply{
+            add(Song("01", "TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("02","말리지 마", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("03","VILLAIN DIES", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("04","ALREADY", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("05","POLAROID", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("06","ESCAPE", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("07","LIAR", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+            add(Song("08","MY BAG", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, false, "music_lilac"))
+        }
 
         albumDatas.apply {  // recycler view를 위한 더미데이터
-            add(Album("TOMBOY", "(여자)아이들", R.drawable.img_album_exp13))
-            add(Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2))
-            add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3))
-            add(Album("Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4))
-            add(Album("BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5))
-            add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6))
+            add(Album("TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, songs))
+            add(Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2, songs))
+            add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3, songs))
+            add(Album("Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4, songs))
+            add(Album("BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5, songs))
+            add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6, songs))
         }
 
         // RecyclerView 어뎁터 연결
@@ -61,11 +74,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // 여기에서 SongAdapter를 선언하여 albumDatas의 songs<Song> 데이터를 통해서 SongFragment의 RecyclerView에 값을 채워줌
-        // 아주 중요함 (context)로 지정하면 되지 않을까 하는 생각
-        // 하지만 click event는 SongFragment에서 일어나기 때문에 SongFragment에서도 Adapter를 선언해줄 것
-        // Adapter에서 view binding이 일어나기 때문에 꼭 SongFragment에서 DataList를 구성하지 않아도 되지 않을까?
-        // 안되면 망함ㅎ
+        // 여기에서 albumJson으로 값을 저장함
 
 
         // 배너 ViewPager 어뎁터 연결
