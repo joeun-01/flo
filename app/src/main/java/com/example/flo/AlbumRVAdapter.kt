@@ -41,7 +41,6 @@ class AlbumRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Ad
         holder.bind(albumList[position])
         holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position]) }  // AlbumFragment로 넘어가도록
         holder.binding.itemAlbumPlayImgIv.setOnClickListener{ mItemClickListener.onPlayAlbum(albumList[position]) }
-        // holder.binding.itemAlbumTitleTv.setOnClickListener{ mItemClickListener.onRemoveAlbum(position) }
     }
 
     // data set의 크기를 알려줌
@@ -54,7 +53,6 @@ class AlbumRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Ad
             binding.itemAlbumSingerTv.text = album.singer
             binding.itemAlbumCoverImgIv.setImageResource(album.coverImg!!)
         }
-
     }
 
 }

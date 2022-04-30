@@ -1,6 +1,7 @@
 package com.example.flo
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import android.widget.ShareActionProvider
 import com.example.flo.databinding.ActivityMainBinding
 import com.google.gson.Gson
 
@@ -225,6 +227,19 @@ class MainActivity : AppCompatActivity() {
         setPlayerStatus(song.isPlaying)
     }
 
+    fun changeSong() {  // 다른 fragment에서 음악을 바꿀 때 사용할 함수
+        mediaPlayer?.reset()  // 음악 멈춤
+        progress.interrupt()
+
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // 새로운 노래 정보 다운로드
+        val songJson = sharedPreferences.getString("songData", null)
+        song = gson.fromJson(songJson, Song::class.java)
+
+        // 음악 초기화
+        startProgress()
+        progressBar()
+        setMiniPlayer(song)
+    }
 
     private fun startProgress(){  // Progress thread 시작작
         progress = Progress(song.playTime, song.isPlaying)

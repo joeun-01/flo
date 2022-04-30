@@ -29,37 +29,41 @@ class SongFragment : Fragment() {
         val songs = gson.fromJson(songsJson, Album::class.java)
 
         binding.albumSongsToggleOffIv.setOnClickListener {  // toggle 켜기
+            Toast.makeText(activity, "$songs", Toast.LENGTH_LONG).show()
             setToggleStatus(false)
         }
         binding.albumSongsToggleOnIv.setOnClickListener {  // toggle 끄기
             setToggleStatus(true)
         }
 
-//        binding.songLilacLayout.setOnClickListener {
-//            Toast.makeText(activity,"LILAC", Toast.LENGTH_SHORT).show()
-//        }
-
-        // 여기에서 albumJson을 불러옴
-        // albumJson의 songs값을 받아옴
-        // 받아와서 recyclerView에 넣어줌
-
-        try {
+        try {  // sharedPreferences에서 받아 온 data를 RecyclerView에 저장
             val songRVAdapter = SongRVAdapter(songs.songs)
             binding.albumSongsListRv.adapter = songRVAdapter
             binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+            songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
+                override fun onPlayAlbum(song : Song) {
+                    playAlbum(song)
+                }
+            })
         }
         catch (e: NullPointerException){
             Log.d("recyclerView", "null")
         }
 
-
-//        songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
-//            override fun onItemClick(song: Song) {
-//
-//            }
-//        })
-
         return binding.root
+    }
+
+    private fun playAlbum(song : Song){
+        val sharedPreferences = requireActivity().getSharedPreferences("song", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+        val songJson = gson.toJson(song)  // Json 객체 생성
+        editor.putString("songData", songJson)
+
+        editor.apply()  // 내부 저장소에 값 저장
+
+        (activity as MainActivity).changeSong()
+//        Toast.makeText(activity, "$song", Toast.LENGTH_LONG).show()
     }
 
     private fun setToggleStatus(isOn : Boolean){

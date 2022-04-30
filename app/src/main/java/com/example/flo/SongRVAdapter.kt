@@ -7,9 +7,7 @@ import com.example.flo.databinding.ItemSongsBinding
 
 class SongRVAdapter(private val songs: ArrayList<Song>?) : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
     interface MyItemClickListener{
-//        fun onItemClick(song: Song) {
-//            //changeSongFragment(song)
-//        }
+        fun onPlayAlbum(song : Song)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
@@ -24,10 +22,8 @@ class SongRVAdapter(private val songs: ArrayList<Song>?) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: SongRVAdapter.ViewHolder, position: Int) {
-        // ViewHolder에 데이터를 binding할 때마다 호출 = 스크롤할 때 굉장히 많이 호출
-        // 해당 position에 대한 데이터를 binding
         holder.bind(songs!![position])
-        //holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(songs[position]) }  // AlbumFragment로 넘어가도록
+        holder.binding.itemSongsPlayIv.setOnClickListener{ mItemClickListener.onPlayAlbum(songs[position]) }  // AlbumFragment로 넘어가도록
     }
 
     // data set의 크기를 알려줌

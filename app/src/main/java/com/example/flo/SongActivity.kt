@@ -148,7 +148,7 @@ class SongActivity : AppCompatActivity()   {
     private fun setPlayer(song : Song){  // 받아온 값 적용
         binding.songMusicTitleTv.text = intent.getStringExtra("title")!!
         binding.songSignerNameTv.text = intent.getStringExtra("singer")!!
-//        binding.songAlbumIv.setImageResource("albumImg"!!)
+        binding.songAlbumIv.setImageResource(song.albumImg!!)
         binding.songStartTimeTv.text = String.format("%02d:%02d", song.second / 60, song.second % 60)
         binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime / 60, song.playTime % 60)
         binding.songProgressSb.progress = (song.second * 100000)/song.playTime
