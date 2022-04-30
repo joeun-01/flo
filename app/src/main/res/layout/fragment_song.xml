@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/song_fragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -92,12 +93,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/album_songs_list_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         tools:listitem="@layout/item_songs"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/album_songs_check_all_iv"/>
+        app:layout_constraintTop_toBottomOf="@id/album_songs_check_all_iv"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

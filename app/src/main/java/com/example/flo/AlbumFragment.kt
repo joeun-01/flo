@@ -1,4 +1,5 @@
 package com.example.flo
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.flo.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
+
 
 class AlbumFragment : Fragment() {
     lateinit var binding : FragmentAlbumBinding
@@ -23,6 +25,14 @@ class AlbumFragment : Fragment() {
         val albumJson = arguments?.getString("album")  // albumList[position]에서 받아온 값
         val album = gson.fromJson(albumJson, Album::class.java)
         setInit(album)
+
+        // SongFragment에 data 전달
+        val sharedPreferences = requireActivity().getSharedPreferences("songs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+        val songsJson = gson.toJson(album)  // Json 객체 생성
+        editor.putString("songsData", songsJson)
+
+        editor.apply()  // 내부 저장소에 값 저장
 
         binding.albumBackIv.setOnClickListener {  // 다시 HomeFragment로 돌아감
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(

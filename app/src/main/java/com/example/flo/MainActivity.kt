@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun startProgress(){  // Progress thread 시작작
-       progress = Progress(song.playTime, song.isPlaying)
+        progress = Progress(song.playTime, song.isPlaying)
         progress.start()
     }
 
