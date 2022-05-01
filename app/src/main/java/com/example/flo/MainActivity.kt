@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     var resetHandler = Handler(Looper.getMainLooper()){  // 재생이 끝나면 다시 처음으로 되돌아가기 위한 핸들러
         binding.mainProgressSb.progress = 0  // 초기화
+        song.current = 0
+        song.second = 0
+
         mediaPlayer?.reset()
         setPlayerStatus(false)
 
@@ -84,14 +87,14 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar : SeekBar?) {  // 터치 끝
                 // 변경된 값을 받아옴
                 binding.mainProgressSb.progress = seekBar!!.progress
-                song.second = (seekBar!!.progress * song.playTime) / 100000
+                song.second = (seekBar.progress * song.playTime) / 100000
                 mediaPlayer?.seekTo(binding.mainProgressSb.progress)
 
                 // 변경된 값을 UI에 적용
                 progress.interrupt()
                 startProgress()
 
-                Log.d("progress 변경 완료", seekBar!!.progress.toString())
+                Log.d("progress 변경 완료", seekBar.progress.toString())
             }
         })
 
@@ -105,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
 
         song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
-            Song("01","라일락","아이유(IU)", R.drawable.img_album_exp2,0, 60, false, "music_lilac")
+            Song("01","라일락","아이유(IU)", R.drawable.img_album_exp2,0, 215, false, "music_lilac")
         } else{
             gson.fromJson(songJson, Song::class.java)
         }
@@ -226,6 +229,118 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer?.seekTo(song.current)
         setPlayerStatus(song.isPlaying)
     }
+
+//    private fun inputDummySongs(){
+//        val songDB = SongDatabase.getInstance(this)!!
+//        val songs = songDB.songDao().getSongs()
+//
+//        if(songs.isNotEmpty()) return
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "TOMBOY",
+//                "(여자)아이들",
+//                R.drawable.img_album_exp13,
+//                0,
+//                180,
+//                false,
+//                "music_tomboy",
+//                0,
+//                false
+//            )
+//        )
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "라일락",
+//                "아이유 (IU)",
+//                R.drawable.img_album_exp2,
+//                0,
+//                215,
+//                false,
+//                "music_lilac",
+//                0,
+//                false
+//            )
+//        )
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "TOMBOY",
+//                "(여자)아이들",
+//                R.drawable.img_album_exp13,
+//                0,
+//                180,
+//                false,
+//                "music_tomboy",
+//                0,
+//                false
+//            )
+//        )
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "TOMBOY",
+//                "(여자)아이들",
+//                R.drawable.img_album_exp13,
+//                0,
+//                180,
+//                false,
+//                "music_tomboy",
+//                0,
+//                false
+//            )
+//        )
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "TOMBOY",
+//                "(여자)아이들",
+//                R.drawable.img_album_exp13,
+//                0,
+//                180,
+//                false,
+//                "music_tomboy",
+//                0,
+//                false
+//            )
+//        )
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "TOMBOY",
+//                "(여자)아이들",
+//                R.drawable.img_album_exp13,
+//                0,
+//                180,
+//                false,
+//                "music_tomboy",
+//                0,
+//                false
+//            )
+//        )
+//
+//        songDB.songDao().insert(
+//            Song(
+//                "01",
+//                "TOMBOY",
+//                "(여자)아이들",
+//                R.drawable.img_album_exp13,
+//                0,
+//                180,
+//                false,
+//                "music_tomboy",
+//                0,
+//                false
+//            )
+//        )
+//    }
 
     fun changeSong() {  // 다른 fragment에서 음악을 바꿀 때 사용할 함수
         mediaPlayer?.reset()  // 음악 멈춤

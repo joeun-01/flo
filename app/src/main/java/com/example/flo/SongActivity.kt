@@ -78,7 +78,7 @@ class SongActivity : AppCompatActivity()   {
                 startTimer()
                 binding.songStartTimeTv.text = String.format("%02d:%02d", song.second / 60, song.second % 60)
 
-                Log.d("progress 변경 완료", seekBar!!.progress.toString())
+                Log.d("progress 변경 완료", seekBar.progress.toString())
             }
         })
     }
@@ -90,7 +90,7 @@ class SongActivity : AppCompatActivity()   {
         val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
 
         song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
-            Song("01","라일락","아이유(IU)", R.drawable.img_album_exp2,0, 60, false, "music_lilac")
+            Song("01","라일락","아이유(IU)", R.drawable.img_album_exp2,0, 215, false, "music_lilac")
         } else{
             gson.fromJson(songJson, Song::class.java)
         }

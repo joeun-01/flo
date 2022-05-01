@@ -40,27 +40,27 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         songsTomboy.apply{
-            add(Song("01", "TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("02","말리지 마", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("03","VILLAIN DIES", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("04","ALREADY", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("05","POLAROID", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("06","ESCAPE", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("07","LIAR", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_tomboy"))
-            add(Song("08","MY BAG", "(여자)아이들", R.drawable.img_album_exp13, 0, 60, true, "music_mybag"))
+            add(Song("01", "TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("02","말리지 마", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("03","VILLAIN DIES", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("04","ALREADY", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("05","POLAROID", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("06","ESCAPE", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("07","LIAR", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
+            add(Song("08","MY BAG", "(여자)아이들", R.drawable.img_album_exp13, 0, 160, true, "music_mybag"))
         }
 
         songsLilac.apply{
-            add(Song("01", "라일락", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("02","Flu", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("03","Coin", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("04","봄 안녕 봄", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("05","Celebrity", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("06","돌림노래 (Feat. DEAN)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("07","빈 컵 (Empty Cup)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("08","아이와 나의 바다", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("09","어푸 (Ah puh)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
-            add(Song("10","에필로그", "아이유 (IU)", R.drawable.img_album_exp2, 0, 60, true, "music_lilac"))
+            add(Song("01", "라일락", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("02","Flu", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("03","Coin", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("04","봄 안녕 봄", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("05","Celebrity", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("06","돌림노래 (Feat. DEAN)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("07","빈 컵 (Empty Cup)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("08","아이와 나의 바다", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("09","어푸 (Ah puh)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
+            add(Song("10","에필로그", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
         }
 
         albumDatas.apply {  // recycler view를 위한 더미데이터
