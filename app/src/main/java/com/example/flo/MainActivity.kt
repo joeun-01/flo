@@ -1,7 +1,6 @@
 package com.example.flo
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
-import android.widget.ShareActionProvider
 import com.example.flo.databinding.ActivityMainBinding
 import com.google.gson.Gson
 
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer?.reset()
         setPlayerStatus(false)
 
-        var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 다시 생성
+        val music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 다시 생성
         mediaPlayer = MediaPlayer.create(this, music)
 
         true
@@ -70,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         binding.mainPauseBtn.setOnClickListener {  // 재생
             setPlayerStatus(false)
         }
+
+        inputDummySongs()
 
         initBottomNavigation()
 
@@ -135,10 +135,10 @@ class MainActivity : AppCompatActivity() {
         editor.apply()  // 내부 저장소에 값 저장
     }
 
-    override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
-        super.onStop()
-
-    }
+//    override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
+//        super.onStop()
+//
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainMiniplayerSingerTv.text = song.singer
         binding.mainProgressSb.progress = (song.second * 100000)/song.playTime
 
-        var music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
+        val music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
         mediaPlayer = MediaPlayer.create(this, music)
 
         // SongActivity와 재생 상태 동기화
@@ -230,117 +230,105 @@ class MainActivity : AppCompatActivity() {
         setPlayerStatus(song.isPlaying)
     }
 
-//    private fun inputDummySongs(){
-//        val songDB = SongDatabase.getInstance(this)!!
-//        val songs = songDB.songDao().getSongs()
-//
-//        if(songs.isNotEmpty()) return
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "TOMBOY",
-//                "(여자)아이들",
-//                R.drawable.img_album_exp13,
-//                0,
-//                180,
-//                false,
-//                "music_tomboy",
-//                0,
-//                false
-//            )
-//        )
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "라일락",
-//                "아이유 (IU)",
-//                R.drawable.img_album_exp2,
-//                0,
-//                215,
-//                false,
-//                "music_lilac",
-//                0,
-//                false
-//            )
-//        )
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "TOMBOY",
-//                "(여자)아이들",
-//                R.drawable.img_album_exp13,
-//                0,
-//                180,
-//                false,
-//                "music_tomboy",
-//                0,
-//                false
-//            )
-//        )
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "TOMBOY",
-//                "(여자)아이들",
-//                R.drawable.img_album_exp13,
-//                0,
-//                180,
-//                false,
-//                "music_tomboy",
-//                0,
-//                false
-//            )
-//        )
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "TOMBOY",
-//                "(여자)아이들",
-//                R.drawable.img_album_exp13,
-//                0,
-//                180,
-//                false,
-//                "music_tomboy",
-//                0,
-//                false
-//            )
-//        )
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "TOMBOY",
-//                "(여자)아이들",
-//                R.drawable.img_album_exp13,
-//                0,
-//                180,
-//                false,
-//                "music_tomboy",
-//                0,
-//                false
-//            )
-//        )
-//
-//        songDB.songDao().insert(
-//            Song(
-//                "01",
-//                "TOMBOY",
-//                "(여자)아이들",
-//                R.drawable.img_album_exp13,
-//                0,
-//                180,
-//                false,
-//                "music_tomboy",
-//                0,
-//                false
-//            )
-//        )
-//    }
+    private fun inputDummySongs(){
+        val songDB = SongDatabase.getInstance(this)!!
+        val songs = songDB.songDao().getSongs()
+
+        if(songs.isNotEmpty()) return
+
+        songDB.songDao().insert(
+            Song(
+                "01",
+                "TOMBOY",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "01",
+                "라일락",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "01",
+                "Next Level",
+                "에스파 (AESPA)",
+                R.drawable.img_album_exp3,
+                0,
+                220,
+                false,
+                "music_tomboy",
+                0,
+                false
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "01",
+                "Boy with Luv",
+                "방탄소년단 (BTS)",
+                R.drawable.img_album_exp4,
+                0,
+                220,
+                false,
+                "music_tomboy",
+                0,
+                false
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "01",
+                "BBoom BBoom",
+                "모모랜드 (MOMOLAND)",
+                R.drawable.img_album_exp5,
+                0,
+                210,
+                false,
+                "music_tomboy",
+                0,
+                false
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "01",
+                "Weekend",
+                "태연 (Tae Yeon)",
+                R.drawable.img_album_exp6,
+                0,
+                230,
+                false,
+                "music_tomboy",
+                0,
+                false
+            )
+        )
+
+        val _songs = songDB.songDao().getSongs()
+        Log.d("DB data", _songs.toString())
+    }
 
     fun changeSong() {  // 다른 fragment에서 음악을 바꿀 때 사용할 함수
         mediaPlayer?.reset()  // 음악 멈춤

@@ -3,7 +3,7 @@ package com.example.flo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "SongTable")
 data class Song(
     val order: String = "", // 수록곡 넘버
     val title : String = "",  // 제목

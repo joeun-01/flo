@@ -20,7 +20,7 @@ abstract class SongDatabase : RoomDatabase() {
                         context.applicationContext,
                         SongDatabase::class.java,
                         "song-database"
-                    ).allowMainThreadQueries().build()  // thread와 database를 연결해줌
+                    ).allowMainThreadQueries().build()
                 }
             }
 
