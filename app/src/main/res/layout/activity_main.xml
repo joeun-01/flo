@@ -35,9 +35,9 @@
         android:id="@+id/main_player_cl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/main_bnv"
         android:paddingBottom="5dp"
-        android:background="#F9F9F9">
+        android:background="#F9F9F9"
+        app:layout_constraintBottom_toTopOf="@id/main_bnv">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -68,10 +68,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:gravity="center_vertical">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
                 android:id="@+id/main_miniplayer_before"
@@ -92,7 +92,6 @@
                 android:visibility="gone"
                 android:src="@drawable/btn_miniplay_pause"/>
 
-
             <ImageView
                 android:id="@+id/main_miniplayer_after"
                 android:layout_width="40dp"
@@ -107,12 +106,9 @@
                 android:src="@drawable/btn_miniplayer_go_list"
                 android:layout_marginHorizontal="15dp" />
 
-
         </LinearLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bnv"

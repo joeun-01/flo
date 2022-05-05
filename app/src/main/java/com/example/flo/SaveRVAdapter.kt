@@ -16,7 +16,9 @@ class SaveRVAdapter(private val songList : ArrayList<Locker>) : RecyclerView.Ada
     }
 
     fun addItem(locker: Locker){
-        songList.add(locker)
+        songList.clear()
+        songList.addAll(locker)
+        
         notifyDataSetChanged()  // data가 바꼈다는 것을 알려줌
     }
 
@@ -35,7 +37,6 @@ class SaveRVAdapter(private val songList : ArrayList<Locker>) : RecyclerView.Ada
         // ViewHolder에 데이터를 binding할 때마다 호출 = 스크롤할 때 굉장히 많이 호출
         // 해당 position에 대한 데이터를 binding
         holder.bind(songList[position])
-        //holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(songList[position]) }  // AlbumFragment로 넘어가도록
         holder.binding.itemSaveMoreIv.setOnClickListener{ mItemClickListener.onRemoveAlbum(position) }
     }
 

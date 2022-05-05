@@ -109,6 +109,7 @@
         app:layout_constraintEnd_toEndOf="@+id/song_album_iv"
         app:layout_constraintStart_toStartOf="@+id/song_album_iv"
         app:layout_constraintTop_toBottomOf="@+id/song_album_iv"/>
+
     <TextView
         android:id="@+id/song_music_lyrics_02_iv"
         android:layout_width="wrap_content"
@@ -222,7 +223,6 @@
 
     </LinearLayout>
 
-
     <ImageView
         android:id="@+id/song_repeat_off_iv"
         android:layout_width="60dp"
@@ -286,7 +286,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <ImageView
         android:id="@+id/song_list_iv"
         android:layout_width="30dp"
@@ -306,7 +305,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

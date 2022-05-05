@@ -20,7 +20,7 @@ class LockerFragment : Fragment() {
     ): View? {
         binding = FragmentLockerBinding.inflate(inflater, container, false)
 
-        var lockerAdapter = LockerVPAdapter(this)
+        val lockerAdapter = LockerVPAdapter(this)
         binding.lockerContentVp.adapter = lockerAdapter
 
         TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp){

@@ -29,27 +29,21 @@ class SongFragment : Fragment() {
         val songs = gson.fromJson(songsJson, Album::class.java)
 
         binding.albumSongsToggleOffIv.setOnClickListener {  // toggle 켜기
-            Toast.makeText(activity, "$songs", Toast.LENGTH_LONG).show()
             setToggleStatus(false)
         }
         binding.albumSongsToggleOnIv.setOnClickListener {  // toggle 끄기
             setToggleStatus(true)
         }
 
-        try {  // sharedPreferences에서 받아 온 data를 RecyclerView에 저장
-            val songRVAdapter = SongRVAdapter(songs.songs)
-            binding.albumSongsListRv.adapter = songRVAdapter
-            binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val songRVAdapter = SongRVAdapter(songs.songs)
+        binding.albumSongsListRv.adapter = songRVAdapter
+        binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-            songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
-                override fun onPlayAlbum(song : Song) {
-                    playAlbum(song)
-                }
-            })
-        }
-        catch (e: NullPointerException){
-            Log.d("recyclerView", "null")
-        }
+        songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
+            override fun onPlayAlbum(song : Song) {
+                playAlbum(song)
+            }
+        })
 
         return binding.root
     }

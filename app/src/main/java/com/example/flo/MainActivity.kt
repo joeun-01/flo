@@ -48,17 +48,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.mainPlayerCl.setOnClickListener {  // SongActivity로 전환
-            //startActivity(Intent(this, SongActivity::class.java))
+            val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
+            editor.putInt("songId", song.id)
+            editor.apply()
+
             val intent = Intent(this, SongActivity::class.java)
-            intent.putExtra("order", song.order)
-            intent.putExtra("title", song.title)
-            intent.putExtra("singer", song.singer)
-            intent.putExtra("albumImg", song.albumImg)
-            intent.putExtra("second", song.second)
-            intent.putExtra("playTime", song.playTime)
-            intent.putExtra("isPlaying", song.isPlaying)
-            intent.putExtra("music", song.music)
-            intent.putExtra("current", song.current)
             startActivity(intent)
         }
 
@@ -104,14 +98,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {  // 다시 MainActivity로 돌아왔을 때 할 작업
         super.onStart()
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // SongActivity에서 저장한 song을 불러옴
-        val songJson = sharedPreferences.getString("songData", null)  // song 내부의 data를 의미
 
-        song = if(songJson == null){  // 처음에는 data가 없기 때문에 오류를 막기 위해 null일 때도 작성
-            Song("01","라일락","아이유(IU)", R.drawable.img_album_exp2,0, 215, false, "music_lilac")
-        } else{
-            gson.fromJson(songJson, Song::class.java)
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val songId = sharedPreferences.getInt("songId", 0)
+
+        val songDB = SongDatabase.getInstance(this)!!
+
+        song = if(songId == 0){
+            songDB.songDao().getSong(1)
         }
+        else{
+            songDB.songDao().getSong(songId)
+        }
+
+        Log.d("song ID", song.id.toString())
 
         startProgress()
         progressBar()
@@ -129,16 +129,12 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        val songJson = gson.toJson(song)  // Json 객체 생성
-        editor.putString("songData", songJson)
+
+        editor.putInt("songId", song.id)
+
 
         editor.apply()  // 내부 저장소에 값 저장
     }
-
-//    override fun onStop() {  // Acitivy가 아예 전환된 후 사용하지 않는 resource 해제
-//        super.onStop()
-//
-//    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -147,7 +143,6 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer = null  // 미디어 플레이어 해제
 
         progress.interrupt()
-        //song.second = 0
         song.isPlaying = false
 
         // MainActivity, SongActivity의 데이터를 저장하고 종료
@@ -275,7 +270,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 220,
                 false,
-                "music_tomboy",
+                "music_nextlevel",
                 0,
                 false
             )
@@ -290,7 +285,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 220,
                 false,
-                "music_tomboy",
+                "music_boywithluv",
                 0,
                 false
             )
@@ -305,7 +300,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 210,
                 false,
-                "music_tomboy",
+                "music_bboombboom",
                 0,
                 false
             )
@@ -320,7 +315,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 230,
                 false,
-                "music_tomboy",
+                "music_weekend",
                 0,
                 false
             )
@@ -333,6 +328,10 @@ class MainActivity : AppCompatActivity() {
     fun changeSong() {  // 다른 fragment에서 음악을 바꿀 때 사용할 함수
         mediaPlayer?.reset()  // 음악 멈춤
         progress.interrupt()
+
+        song.second = 0
+        song.current = 0
+        song.isPlaying = false
 
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // 새로운 노래 정보 다운로드
         val songJson = sharedPreferences.getString("songData", null)
@@ -354,7 +353,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class Progress(private val playTime : Int, var isPlaying : Boolean) : Thread() {  // progressBar 변경 thread
-        private var second : Int = song.second
+        var second : Int = song.second
         var mills : Float = second.toFloat() * 1000
 
             override fun run() {
