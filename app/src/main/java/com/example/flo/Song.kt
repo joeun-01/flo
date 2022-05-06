@@ -1,6 +1,7 @@
 package com.example.flo
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "SongTable")
@@ -14,7 +15,8 @@ data class Song(
     var isPlaying : Boolean = false,  // 현재 재생 여부
     var music : String = "",  // mp3 파일명
     var current : Int = 0,  // MediaPlayer로 재생할 지점
-    var isLike : Boolean = false
+    var isLike : Boolean = false,
+    var albumIdx : Int = 0
 ){
     @PrimaryKey(autoGenerate = true) var id : Int = 0
 }

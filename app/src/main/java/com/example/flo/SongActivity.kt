@@ -1,21 +1,24 @@
 package com.example.flo
+
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flo.databinding.ActivitySongBinding
-import com.google.gson.Gson
-
+import com.example.flo.databinding.ToastLikeBinding
 
 class SongActivity : AppCompatActivity()   {
 
     lateinit var binding: ActivitySongBinding
+    lateinit var toastBinding : ToastLikeBinding
     lateinit var timer : Timer  // Timer thread
     private var mediaPlayer : MediaPlayer? = null  // 노래 재생
-    private var gson : Gson = Gson()  // Json 변환
 
     val songs = arrayListOf<Song>()
     lateinit var songDB : SongDatabase  // 데이터베이스의 song 목록을 가져와서 songs에 저장
@@ -23,7 +26,10 @@ class SongActivity : AppCompatActivity()   {
 
     override fun onCreate(savedInstanceState: Bundle?) {  // SongActivity 최초 실행 시 일어날 작업
         super.onCreate(savedInstanceState)
+
         binding = ActivitySongBinding.inflate(layoutInflater)  // SongActivity를 보여줌
+        toastBinding = ToastLikeBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         initClickListener()
@@ -62,9 +68,10 @@ class SongActivity : AppCompatActivity()   {
 
         initSong()  // main에서 실행 중이던 곡 정보 받아오기
 
-        // 나중에 song이랑 이런 거 저장해서 넘기는 법 추가하기 !!! 필수필수 꼭 기억하셈요
         startTimer()
         setPlayer(songs[nowPos])
+
+        Log.d("받은 song 값", songs[nowPos].toString())
     }
 
     // 사용자가 focus를 잃었을 때 음악이 중지 (다른 activity가 실행되거나 앱이 잠시 background로 갔을 때)
@@ -72,10 +79,11 @@ class SongActivity : AppCompatActivity()   {
         super.onPause()
         timer.interrupt()
 
-        songs[nowPos].second = ((binding.songProgressSb.progress * songs[nowPos].playTime)/100)/1000
+        songDB.songDao().updateSecondById(((binding.songProgressSb.progress * songs[nowPos].playTime)/100)/1000, songs[nowPos].id)
+        songDB.songDao().updateIsPlayingById(songs[nowPos].isPlaying, songs[nowPos].id)
 
         mediaPlayer?.stop()
-        songs[nowPos].current = mediaPlayer!!.currentPosition
+        songDB.songDao().updateCurrentById(mediaPlayer!!.currentPosition, songs[nowPos].id)
 
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
@@ -150,24 +158,9 @@ class SongActivity : AppCompatActivity()   {
         val songId = sharedPreferences.getInt("songId", 0)
 
         nowPos = getPlayingSongPosition(songId)
+        songs[nowPos] = songDB.songDao().getSong(songs[nowPos].id)
 
         Log.d("now Song ID", songs[nowPos].id.toString())
-    }
-
-    private fun moveSong(direct : Int) {
-        if(nowPos + direct < 0) {
-            Toast.makeText(this,"first song", Toast.LENGTH_SHORT).show()
-            return
-        }
-        if(nowPos + direct >= songs.size) {
-            Toast.makeText(this,"last song", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        nowPos += direct
-
-        restartTimer()
-        setPlayerStatus(true)
     }
 
     private fun getPlayingSongPosition(songId : Int) : Int {
@@ -200,6 +193,35 @@ class SongActivity : AppCompatActivity()   {
         mediaPlayer?.seekTo(song.current)  // seekbar 위치부터 재생
 
         setPlayerStatus(song.isPlaying)  // song의 Boolean 값을 따름
+    }
+
+    private fun moveSong(direct : Int) {
+        if(nowPos + direct < 0) {
+            Toast.makeText(this,"first song", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(nowPos + direct >= songs.size) {
+            Toast.makeText(this,"last song", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // 재생 중이던 곡 초기화
+        songDB.songDao().updateSecondById(0, songs[nowPos].id)
+        songDB.songDao().updateIsPlayingById(false, songs[nowPos].id)
+        songDB.songDao().updateCurrentById(0, songs[nowPos].id)
+
+        timer.interrupt()  // 이전 thread를 종료
+
+        mediaPlayer?.release()  // 재생 상태 초기화
+        mediaPlayer = null
+
+        nowPos += direct  // 곡 이동
+
+        songs[nowPos] = songDB.songDao().getSong(songs[nowPos].id)
+
+        setPlayer(songs[nowPos])
+        startTimer()  // 재시작
+        setPlayerStatus(true)
     }
 
     private fun setPlayerStatus(isPlaying : Boolean) {  // 재생, 일지정지 관리
@@ -254,11 +276,38 @@ class SongActivity : AppCompatActivity()   {
         songs[nowPos].isLike = !isLike  // DB 업데이트는 아님
         songDB.songDao().updateIsLikeById(!isLike , songs[nowPos].id)  // DB 업데이트
 
-        if(songs[nowPos].isLike){  // 좋아요 버튼
+        if(songs[nowPos].isLike){  // 좋아요 버튼을 눌렀을 때
             binding.songLikeIv.setImageResource(R.drawable.ic_my_like_on)
+            setToastMessage(!isLike)
+        }
+        else{  // 좋아요 버튼을 껐을 때
+            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_off)
+            setToastMessage(!isLike)
+        }
+    }
+
+    private fun setToastMessage(isLike: Boolean) {  // 좋아요 상황에 따른 toast message
+        if(isLike){  // toast.setText가 안먹혀서.... 이렇게 나눔
+            val like = layoutInflater.inflate(R.layout.toast_like, findViewById(R.id.toast_like_layout_root))
+
+            var toast = Toast(this)
+
+            toast.view = like
+            toast.duration = Toast.LENGTH_SHORT
+            toast.setGravity(Gravity.CENTER_HORIZONTAL and Gravity.FILL_HORIZONTAL, 0, 200)
+
+            toast.show()
         }
         else{
-            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_off)
+            val unlike = layoutInflater.inflate(R.layout.toast_likeoff, findViewById(R.id.toast_unlike_layout_root))
+
+            var toast = Toast(this)
+
+            toast.view = unlike
+            toast.duration = Toast.LENGTH_SHORT
+            toast.setGravity(Gravity.CENTER_HORIZONTAL and Gravity.FILL_HORIZONTAL, 0, 200)
+
+            toast.show()
         }
     }
 
@@ -269,11 +318,12 @@ class SongActivity : AppCompatActivity()   {
 
     private fun restartTimer(){  // 타이머 thread 재시작
         timer.interrupt()  // 이전 thread를 종료
-        mediaPlayer?.reset()  // 재생 상태 초기화
+        mediaPlayer?.release()  // 재생 상태 초기화
+        mediaPlayer = null
 
-        songs[nowPos].second = 0
-        songs[nowPos].current = 0
-        songs[nowPos].isPlaying = false  // 일지정지 상태로
+        songDB.songDao().updateSecondById(0, songs[nowPos].id)
+        songDB.songDao().updateIsPlayingById(false, songs[nowPos].id)
+        songDB.songDao().updateCurrentById(0, songs[nowPos].id)
 
         startTimer()  // 재시작
         setPlayer(songs[nowPos])

@@ -1,13 +1,16 @@
 package com.example.flo
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.ItemSaveBinding
 
-class SaveRVAdapter(private val songList : ArrayList<Locker>) : RecyclerView.Adapter<SaveRVAdapter.ViewHolder>() {
+class SaveRVAdapter() : RecyclerView.Adapter<SaveRVAdapter.ViewHolder>() {
+    private val songs = ArrayList<Song>()
+
     interface MyItemClickListener{
-        fun onRemoveAlbum(position: Int)
+        fun onRemoveSong(songId: Int)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
@@ -15,15 +18,17 @@ class SaveRVAdapter(private val songList : ArrayList<Locker>) : RecyclerView.Ada
         mItemClickListener = itemClickListener
     }
 
-    fun addItem(locker: Locker){
-        songList.clear()
-        songList.addAll(locker)
-        
+    @SuppressLint("NotifyDataSetChanged")
+    fun addSongs(songs: ArrayList<Song>){
+        this.songs.clear()
+        this.songs.addAll(songs)
+
         notifyDataSetChanged()  // data가 바꼈다는 것을 알려줌
     }
 
-    fun removeItem(position: Int){
-        songList.removeAt(position)
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeSongs(position: Int){
+        songs.removeAt(position)
         notifyDataSetChanged()
     }
 
@@ -36,19 +41,22 @@ class SaveRVAdapter(private val songList : ArrayList<Locker>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: SaveRVAdapter.ViewHolder, position: Int) {
         // ViewHolder에 데이터를 binding할 때마다 호출 = 스크롤할 때 굉장히 많이 호출
         // 해당 position에 대한 데이터를 binding
-        holder.bind(songList[position])
-        holder.binding.itemSaveMoreIv.setOnClickListener{ mItemClickListener.onRemoveAlbum(position) }
+        holder.bind(songs[position])
+        holder.binding.itemSaveMoreIv.setOnClickListener {
+            mItemClickListener.onRemoveSong(songs[position].id)
+            removeSongs(position)
+        }
     }
 
     // data set의 크기를 알려줌
-    override fun getItemCount(): Int = songList.size
+    override fun getItemCount(): Int = songs.size
 
     inner class ViewHolder(val binding : ItemSaveBinding) : RecyclerView.ViewHolder(binding.root){
         // ItemView를 잡아주는 ViewHolder
-        fun bind(locker: Locker){
-            binding.itemSaveTitleTv.text = locker.title
-            binding.itemSaveSingerTv.text = locker.singer
-            binding.itemSaveCoverImgIv.setImageResource(locker.albumImg!!)
+        fun bind(song: Song){
+            binding.itemSaveTitleTv.text = song.title
+            binding.itemSaveSingerTv.text = song.singer
+            binding.itemSaveCoverImgIv.setImageResource(song.albumImg!!)
         }
 
     }

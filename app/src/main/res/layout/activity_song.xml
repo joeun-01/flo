@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/song_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -105,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="나라는 꽃가루에"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/song_album_iv"
         app:layout_constraintStart_toStartOf="@+id/song_album_iv"
         app:layout_constraintTop_toBottomOf="@+id/song_album_iv"/>
@@ -116,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="눈이 따끔해 아야"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/song_music_lyrics_01_iv"
         app:layout_constraintStart_toStartOf="@+id/song_music_lyrics_01_iv"
         app:layout_constraintTop_toBottomOf="@+id/song_music_lyrics_01_iv"/>
@@ -125,7 +126,7 @@
         android:id="@+id/song_like_iv_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/song_album_iv"
         app:layout_constraintStart_toStartOf="@+id/song_album_iv"
@@ -133,14 +134,14 @@
 
         <ImageView
             android:id="@+id/song_like_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_my_like_off"/>
 
         <ImageView
             android:id="@+id/song_unlike_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="50dp"
             android:src="@drawable/btn_player_unlike_off"/>
 
@@ -163,7 +164,7 @@
         android:max="100000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song_like_iv_layout"/>
+        app:layout_constraintBottom_toTopOf="@+id/song_player_layout"/>
 
     <TextView
         android:id="@+id/song_start_time_tv"
@@ -189,10 +190,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginBottom="7dp"
         app:layout_constraintBottom_toTopOf="@+id/song_related_iv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song_progress_sb">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/song_previous_iv"

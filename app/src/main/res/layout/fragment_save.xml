@@ -6,47 +6,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/save_select_all_iv"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/btn_playlist_select_off"
+
+
+    <LinearLayout
+        android:id="@+id/save_select_ly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/save_select_all_tv"
+        <ImageView
+            android:id="@+id/save_select_all_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/btn_playlist_select_off"/>
+
+        <ImageView
+            android:id="@+id/save_select_on_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/btn_playlist_select_on"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/save_select_all_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체선택"
+            android:textSize="15sp"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/save_select_on_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택해제"
+            android:textSize="15sp"
+            android:textColor="@color/select_color"
+            android:layout_marginStart="3dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/save_listen_ly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="전체선택"
-        android:textSize="15sp"
-        android:layout_marginStart="3dp"
-        app:layout_constraintTop_toTopOf="@+id/save_select_all_iv"
-        app:layout_constraintBottom_toBottomOf="@id/save_select_all_iv"
-        app:layout_constraintStart_toEndOf="@+id/save_select_all_iv"/>
-
-    <ImageView
-        android:id="@+id/save_listen_all_iv"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/icon_browse_arrow_right"
+        android:orientation="horizontal"
         android:layout_marginStart="15dp"
-        app:layout_constraintTop_toTopOf="@id/save_select_all_iv"
-        app:layout_constraintBottom_toBottomOf="@+id/save_select_all_iv"
-        app:layout_constraintStart_toEndOf="@+id/save_select_all_tv"/>
+        app:layout_constraintTop_toTopOf="@id/save_select_ly"
+        app:layout_constraintBottom_toBottomOf="@+id/save_select_ly"
+        app:layout_constraintStart_toEndOf="@+id/save_select_ly">
 
-    <TextView
-        android:id="@+id/save_listen_all_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="전체듣기"
-        android:textSize="15sp"
-        android:layout_marginStart="3dp"
-        app:layout_constraintTop_toTopOf="@+id/save_select_all_iv"
-        app:layout_constraintBottom_toBottomOf="@id/save_select_all_iv"
-        app:layout_constraintStart_toEndOf="@+id/save_listen_all_iv"/>
+        <ImageView
+            android:id="@+id/save_listen_all_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_browse_arrow_right"/>
+
+        <TextView
+            android:id="@+id/save_listen_all_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체듣기"
+            android:textSize="15sp"
+            android:layout_marginStart="3dp"
+            app:layout_constraintTop_toTopOf="@+id/save_select_ly"
+            app:layout_constraintBottom_toBottomOf="@id/save_select_ly"
+            app:layout_constraintStart_toEndOf="@+id/save_listen_all_iv"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/save_edit_tv"
@@ -55,8 +86,8 @@
         android:text="편집"
         android:textSize="15sp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toTopOf="@+id/save_select_all_iv"
-        app:layout_constraintBottom_toBottomOf="@+id/save_select_all_iv"
+        app:layout_constraintTop_toTopOf="@+id/save_select_ly"
+        app:layout_constraintBottom_toBottomOf="@+id/save_select_ly"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +98,7 @@
         tools:listitem="@layout/item_save"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/save_select_all_iv"
+        app:layout_constraintTop_toBottomOf="@id/save_select_ly"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
