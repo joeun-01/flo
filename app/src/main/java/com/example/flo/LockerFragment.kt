@@ -1,5 +1,6 @@
 package com.example.flo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,10 @@ class LockerFragment : Fragment() {
             tab, position ->
             tab.text= information[position]  // 각 position의 Tab에 text 연결
         }.attach()
+
+        binding.lockerLoginTv.setOnClickListener {  // 로그인 창을 누르면 LoginActivity로 이동
+            startActivity(Intent(activity, LoginActivity::class.java))
+        }
 
         return binding.root
     }

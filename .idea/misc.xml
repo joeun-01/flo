@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable-v24/viewpager_selected_indicator.xml" value="0.1895" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/btm_color_selector.xml" value="0.226" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/edge.xml" value="0.1865" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1755" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/main_btm_color_selector.xml" value="0.255" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/main_btm_home_selector.xml" value="0.1755" />
@@ -14,7 +15,9 @@
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/textview_background_radius.xml" value="0.1755" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/viewpager_indicator.xml" value="0.1895" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/drawable/viewpager_selected_indicator.xml" value="0.193" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_signup.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_song.xml" value="0.264" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/activity_splash.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/jjy02/AndroidStudioProjects/udemy_android_template_bottomnavi-main/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.264" />

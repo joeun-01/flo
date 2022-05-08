@@ -4,6 +4,7 @@ import androidx.room.*
 
 @Dao
 interface AlbumDao {
+
     @Insert
     fun insert(album: Album)
 
@@ -12,5 +13,8 @@ interface AlbumDao {
 
     @Delete
     fun delete(album: Album)
+
+    @Query("SELECT * FROM AlbumTable")
+    fun getUsers() : List<Album>
 
 }
