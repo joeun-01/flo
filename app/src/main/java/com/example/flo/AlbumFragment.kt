@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.flo.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -15,6 +16,10 @@ class AlbumFragment : Fragment() {
     private var gson : Gson = Gson()
     private val information = arrayListOf("수록곡", "상세정보", "영상")  // Tab에 들어갈 내용
 
+    lateinit var songDB : SongDatabase
+
+    private var isLiked : Boolean= false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,9 +27,15 @@ class AlbumFragment : Fragment() {
     ): View? {
         binding = FragmentAlbumBinding.inflate(inflater, container, false)
 
+        songDB = SongDatabase.getInstance(requireActivity())!!
+
         val albumJson = arguments?.getString("album")  // albumList[position]에서 받아온 값
         val album = gson.fromJson(albumJson, Album::class.java)
+
+        // 현재 앨범에 대한 데이터를 반영
+        isLiked = isLikedAlbum(album.id)
         setInit(album)
+        setOnLikeListener(album)
 
         // SongFragment에 data 전달
         val sharedPreferences = requireActivity().getSharedPreferences("songs", MODE_PRIVATE)
@@ -57,6 +68,53 @@ class AlbumFragment : Fragment() {
         binding.albumAlbumIv.setImageResource((album.coverImg!!))
         binding.albumMusicTitleTv.text = album.title.toString()
         binding.albumSingerNameTv.text = album.singer.toString()
+
+        if(isLiked) {
+            binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
+        }
+        else {
+            binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
+        }
     }
 
+    private fun getJwt() : Int {
+        val sharedPreferences = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+
+        return sharedPreferences!!.getInt("jwt", 0)  // jwt 값이 없으면 0을 반환
+    }
+
+    private fun likeAlbum(userId : Int, albumId: Int) {
+        val like = Like(userId, albumId)  // 좋아요를 누르면 like table을 업데이트
+
+        songDB.albumDao().likeAlbum(like)
+    }
+
+    private fun isLikedAlbum(albumId: Int) : Boolean {  // 좋아요를 눌렀는지 확인
+        val userId = getJwt()
+
+        val likeId = songDB.albumDao().isLikedAlbum(userId, albumId)
+
+        return likeId != null  // 좋아요를 안하면 null -> false를 반환
+    }
+
+    private fun dislikedAlbum(albumId: Int) {  // 좋아요 삭제
+        val userId = getJwt()
+
+        songDB.albumDao().dislikedAlbum(userId, albumId)
+    }
+
+    private fun setOnLikeListener(album: Album) {
+        val userId = getJwt()
+
+        binding.albumLikeIv.setOnClickListener {
+            if(isLiked) {  // 좋아요를 취소
+                binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
+                dislikedAlbum(album.id)
+            }
+            else {
+                binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
+                likeAlbum(userId, album.id)
+            }
+        }
+    }
 }

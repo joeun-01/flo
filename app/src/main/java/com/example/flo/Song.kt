@@ -2,9 +2,11 @@ package com.example.flo
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "SongTable")
+@Entity(tableName = "SongTable",
+    foreignKeys = [ForeignKey( entity = Album::class, parentColumns = ["id"], childColumns = ["albumIdx"], onDelete = CASCADE)])
 data class Song(
     val order: String = "", // 수록곡 넘버
     val title : String = "",  // 제목

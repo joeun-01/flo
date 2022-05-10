@@ -53,14 +53,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        songDB = SongDatabase.getInstance(this)!!
+
         inputDummySongs()
+        inputDummyAlbums()
 
         initPlayList()
 
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val songId = sharedPreferences.getInt("songId", 0)
 
-        songDB = SongDatabase.getInstance(this)!!
+
 
         if(songId == 0){
             songs[nowPos] = songDB.songDao().getSong(1)
@@ -417,6 +420,48 @@ class MainActivity : AppCompatActivity() {
 
         val _songs = songDB.songDao().getSongs()
         Log.d("DB data", _songs.toString())
+    }
+
+    private fun inputDummyAlbums(){
+        val albums = songDB.albumDao().getAlbums()
+
+        if(albums.isNotEmpty()) return
+
+        songDB.albumDao().insert(
+            Album(
+                0,"TOMBOY", "(여자)아이들", R.drawable.img_album_exp13
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                1,"LILAC", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                2,"Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                3,"Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                4,"BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                5,"Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6
+            )
+        )
     }
 
     private fun initBottomNavigation(){

@@ -23,9 +23,12 @@ class HomeFragment : Fragment() {
     private val gson : Gson = Gson()
     private lateinit var slide : AutoSlide
     private var position : Int = 0
+
     private var albumDatas = ArrayList<Album>()
     private var songsTomboy = ArrayList<Song>()
     private var songsLilac = ArrayList<Song>()
+
+    lateinit var songDB : SongDatabase
 
     val handler = Handler(Looper.getMainLooper()){
         setPage()  // message를 받으면 page를 넘김
@@ -38,6 +41,10 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        songDB = SongDatabase.getInstance(requireActivity())!!
+
+        albumDatas.addAll(songDB.albumDao().getAlbums())
 
         songsTomboy.apply{
             add(Song("01", "TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
@@ -61,15 +68,6 @@ class HomeFragment : Fragment() {
             add(Song("08","아이와 나의 바다", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
             add(Song("09","어푸 (Ah puh)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
             add(Song("10","에필로그", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-        }
-
-        albumDatas.apply {  // recycler view를 위한 더미데이터
-            add(Album("TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, songsTomboy))
-            add(Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2, songsLilac))
-            add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3, songsTomboy))
-            add(Album("Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4, songsLilac))
-            add(Album("BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5, songsTomboy))
-            add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6, songsLilac))
         }
 
         // RecyclerView 어뎁터 연결
