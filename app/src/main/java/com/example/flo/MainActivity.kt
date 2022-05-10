@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val songId = sharedPreferences.getInt("songId", 0)
 
-
-
         if(songId == 0){
             songs[nowPos] = songDB.songDao().getSong(1)
         }
@@ -171,8 +169,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPlayList() {  // 플레이리스트 생성
-        songDB = SongDatabase.getInstance(this)!!
-        songs.addAll(songDB.songDao().getSongs())  // 데이터베이스의 재생 목록을 가져옴
+        songs.addAll(songDB.songDao().getPlayList("01"))
     }
 
     private fun initSong(){
@@ -182,7 +179,6 @@ class MainActivity : AppCompatActivity() {
         nowPos = getPlayingSongPosition(songId)
 
         songs[nowPos] = songDB.songDao().getSong(songs[nowPos].id)
-//        Log.d("nowPos 값", nowPos.toString())
     }
 
     private fun getPlayingSongPosition(songId : Int) : Int {
@@ -275,6 +271,8 @@ class MainActivity : AppCompatActivity() {
         startProgress()
         progressBar()
         setMiniPlayer(songs[nowPos])
+
+        setPlayerStatus(true)
     }
 
     private fun startProgress(){  // Progress thread 시작
@@ -334,7 +332,118 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                1
+                0
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "02",
+                "말리지 마",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false,
+                0
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "03",
+                "VILLAIN DIES",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false,
+                0
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "04",
+                "ALREADY",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false,
+                0
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "05",
+                "POLAROID",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false,
+                0
+            )
+        )
+        songDB.songDao().insert(
+            Song(
+                "06",
+                "ESCAPE",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false,
+                0
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "07",
+                "LIAR",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                180,
+                false,
+                "music_tomboy",
+                0,
+                false,
+                0
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "08",
+                "MY BAG",
+                "(여자)아이들",
+                R.drawable.img_album_exp13,
+                0,
+                160,
+                false,
+                "music_mybag",
+                0,
+                false,
+                0
             )
         )
 
@@ -350,13 +459,157 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                2
+                1
             )
         )
 
         songDB.songDao().insert(
             Song(
-                "01",
+                "02",
+                "Flu",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "03",
+                "Coin",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "04",
+                "봄 안녕 봄",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "05",
+                "Celebrity",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "06",
+                "돌림노래 (Feat. DEAN)",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "07",
+                "빈 컵 (Empty Cup)",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "08",
+                "아이와 나의 바다",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "09",
+                "어푸 (Ah puh)",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "10",
+                "에필로그",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2,
+                0,
+                215,
+                false,
+                "music_lilac",
+                0,
+                false,
+                1
+            )
+        )
+
+        songDB.songDao().insert(
+            Song(
+                "10",
                 "Next Level",
                 "에스파 (AESPA)",
                 R.drawable.img_album_exp3,
@@ -366,7 +619,7 @@ class MainActivity : AppCompatActivity() {
                 "music_nextlevel",
                 0,
                 false,
-                3
+                2
             )
         )
 
@@ -382,7 +635,7 @@ class MainActivity : AppCompatActivity() {
                 "music_boywithluv",
                 0,
                 false,
-                4
+                3
             )
         )
 
@@ -398,7 +651,7 @@ class MainActivity : AppCompatActivity() {
                 "music_bboombboom",
                 0,
                 false,
-                5
+                4
             )
         )
 
@@ -414,7 +667,7 @@ class MainActivity : AppCompatActivity() {
                 "music_weekend",
                 0,
                 false,
-                6
+                5
             )
         )
 

@@ -17,6 +17,7 @@ class AlbumFragment : Fragment() {
     private val information = arrayListOf("수록곡", "상세정보", "영상")  // Tab에 들어갈 내용
 
     lateinit var songDB : SongDatabase
+    lateinit var albumInfo : Album
 
     private var isLiked : Boolean= false
 
@@ -29,20 +30,19 @@ class AlbumFragment : Fragment() {
 
         songDB = SongDatabase.getInstance(requireActivity())!!
 
-        val albumJson = arguments?.getString("album")  // albumList[position]에서 받아온 값
-        val album = gson.fromJson(albumJson, Album::class.java)
+        var albumIdx = arguments?.getInt("albumIdx")  // album.id를 불러옴
+
+        albumInfo = songDB.songDao().getAlbum(albumIdx)
 
         // 현재 앨범에 대한 데이터를 반영
-        isLiked = isLikedAlbum(album.id)
-        setInit(album)
-        setOnLikeListener(album)
+        isLiked = isLikedAlbum(albumInfo.id)
+        setInit(albumInfo)
+        setOnLikeListener(albumInfo)
 
-        // SongFragment에 data 전달
-        val sharedPreferences = requireActivity().getSharedPreferences("songs", MODE_PRIVATE)
+        // SongFragment에 album ID 전달
+        val sharedPreferences = requireActivity().getSharedPreferences("album", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        val songsJson = gson.toJson(album)  // Json 객체 생성
-        editor.putString("songsData", songsJson)
-
+        editor.putInt("albumID", albumInfo.id)
         editor.apply()  // 내부 저장소에 값 저장
 
         binding.albumBackIv.setOnClickListener {  // 다시 HomeFragment로 돌아감

@@ -19,6 +19,10 @@ interface SongDao {
     @Query("SELECT * FROM SongTable WHERE id = :id")  // id를 통해서 song을 받아옴
     fun getSong(id : Int) : Song
 
+    @Query("SELECT * FROM SongTable WHERE number = :number")
+    fun getPlayList(number : String) : List<Song>
+
+    // 노래 정보 업데이트
     @Query("UPDATE SongTable SET isLike = :isLike WHERE id = :id")  // isLike 값 업데이트
     fun updateIsLikeById(isLike : Boolean, id : Int)
 
@@ -34,4 +38,10 @@ interface SongDao {
     @Query("UPDATE SongTable SET isPlaying = :isPlaying WHERE id = :id")
     fun updateIsPlayingById(isPlaying : Boolean, id : Int)
 
+    // 앨범 불러오기
+    @Query("SELECT * FROM AlbumTable WHERE id = :id")
+    fun getAlbum(id : Int?) : Album
+
+    @Query("SELECT * FROM SongTable WHERE albumIdx = :albumIdx")
+    fun getSongsInAlbum(albumIdx : Int) : List<Song>
 }

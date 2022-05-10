@@ -24,11 +24,8 @@ class HomeFragment : Fragment() {
     private lateinit var slide : AutoSlide
     private var position : Int = 0
 
-    private var albumDatas = ArrayList<Album>()
-    private var songsTomboy = ArrayList<Song>()
-    private var songsLilac = ArrayList<Song>()
-
     lateinit var songDB : SongDatabase
+    private var albumDatas = ArrayList<Album>()
 
     val handler = Handler(Looper.getMainLooper()){
         setPage()  // message를 받으면 page를 넘김
@@ -46,30 +43,6 @@ class HomeFragment : Fragment() {
 
         albumDatas.addAll(songDB.albumDao().getAlbums())
 
-        songsTomboy.apply{
-            add(Song("01", "TOMBOY", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("02","말리지 마", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("03","VILLAIN DIES", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("04","ALREADY", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("05","POLAROID", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("06","ESCAPE", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("07","LIAR", "(여자)아이들", R.drawable.img_album_exp13, 0, 180, true, "music_tomboy"))
-            add(Song("08","MY BAG", "(여자)아이들", R.drawable.img_album_exp13, 0, 160, true, "music_mybag"))
-        }
-
-        songsLilac.apply{
-            add(Song("01", "라일락", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("02","Flu", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("03","Coin", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("04","봄 안녕 봄", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("05","Celebrity", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("06","돌림노래 (Feat. DEAN)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("07","빈 컵 (Empty Cup)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("08","아이와 나의 바다", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("09","어푸 (Ah puh)", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-            add(Song("10","에필로그", "아이유 (IU)", R.drawable.img_album_exp2, 0, 215, true, "music_lilac"))
-        }
-
         // RecyclerView 어뎁터 연결
         val albumRVAdapter = AlbumRVAdapter(albumDatas)
         binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
@@ -81,8 +54,8 @@ class HomeFragment : Fragment() {
                 changeAlbumFragment(album)
             }
 
-            override fun onPlayAlbum(album: Album) {
-                playAlbum(album.songs)
+            override fun onPlayAlbum(albumID: Int) {  // albumID를 받아옴
+                playAlbum(albumID)
             }
 
             override fun onRemoveAlbum(position: Int) {
@@ -119,18 +92,16 @@ class HomeFragment : Fragment() {
         (context as MainActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, AlbumFragment().apply {
                 arguments = Bundle().apply {
-                    val gson = Gson()
-                    val albumJson = gson.toJson(album)
-                    putString("album", albumJson)
+                    putInt("albumIdx", album.id)
                 }
             })
             .commitAllowingStateLoss()
     }
 
-    private fun playAlbum(songs : ArrayList<Song>?){
+    private fun playAlbum(albumID : Int) {  // albumID를 이용하여 수록곡을 불러옴
         val sharedPreferences = requireActivity().getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        val songJson = gson.toJson(songs!![0])  // Json 객체 생성
+        val songJson = gson.toJson(songDB.songDao().getSongsInAlbum(albumID)[0])  // Json 객체 생성
         editor.putString("songData", songJson)
 
         editor.apply()  // 내부 저장소에 값 저장

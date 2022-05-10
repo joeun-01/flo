@@ -2,11 +2,9 @@ package com.example.flo
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flo.databinding.FragmentSongBinding
@@ -16,6 +14,8 @@ class SongFragment : Fragment() {
     lateinit var binding :FragmentSongBinding
     private var gson : Gson = Gson()
 
+    lateinit var songDB : SongDatabase
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,10 +23,13 @@ class SongFragment : Fragment() {
     ): View? {
         binding = FragmentSongBinding.inflate(inflater,container,false)
 
-        // activity에서 sharedPreferences를 불러와서 데이터 저장
-        val sharedPreferences = requireActivity().getSharedPreferences("songs", MODE_PRIVATE)
-        val songsJson = sharedPreferences.getString("songsData", null)
-        val songs = gson.fromJson(songsJson, Album::class.java)
+        songDB = SongDatabase.getInstance(requireActivity())!!
+
+        // albumID 불러오기
+        val sharedPreferences = requireActivity().getSharedPreferences("album", MODE_PRIVATE)
+        val albumID = sharedPreferences.getInt("albumID", 0)
+
+        val songList = songDB.songDao().getSongsInAlbum(albumID)
 
         binding.albumSongsToggleOffIv.setOnClickListener {  // toggle 켜기
             setToggleStatus(false)
@@ -35,7 +38,9 @@ class SongFragment : Fragment() {
             setToggleStatus(true)
         }
 
-        val songRVAdapter = SongRVAdapter(songs.songs)
+
+
+        val songRVAdapter = SongRVAdapter(songList)
         binding.albumSongsListRv.adapter = songRVAdapter
         binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -57,7 +62,6 @@ class SongFragment : Fragment() {
         editor.apply()  // 내부 저장소에 값 저장
 
         (activity as MainActivity).changeSong()
-//        Toast.makeText(activity, "$song", Toast.LENGTH_LONG).show()
     }
 
     private fun setToggleStatus(isOn : Boolean){

@@ -10,7 +10,7 @@ class AlbumRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Ad
 
     interface MyItemClickListener{
         fun onItemClick(album : Album)  // Album 데이터 값을 넘겨줌
-        fun onPlayAlbum(album: Album)
+        fun onPlayAlbum(albumID: Int)
         fun onRemoveAlbum(position: Int)
     }
 
@@ -40,7 +40,7 @@ class AlbumRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Ad
         // 해당 position에 대한 데이터를 binding
         holder.bind(albumList[position])
         holder.itemView.setOnClickListener{ mItemClickListener.onItemClick(albumList[position]) }  // AlbumFragment로 넘어가도록
-        holder.binding.itemAlbumPlayImgIv.setOnClickListener{ mItemClickListener.onPlayAlbum(albumList[position]) }
+        holder.binding.itemAlbumPlayImgIv.setOnClickListener{ mItemClickListener.onPlayAlbum(albumList[position].id) }
     }
 
     // data set의 크기를 알려줌
