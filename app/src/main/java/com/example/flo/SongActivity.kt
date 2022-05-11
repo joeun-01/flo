@@ -20,8 +20,9 @@ class SongActivity : AppCompatActivity()   {
     lateinit var timer : Timer  // Timer thread
     private var mediaPlayer : MediaPlayer? = null  // 노래 재생
 
-    val songs = arrayListOf<Song>()
     lateinit var songDB : SongDatabase  // 데이터베이스의 song 목록을 가져와서 songs에 저장
+    val songs = arrayListOf<Song>()
+
     var nowPos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {  // SongActivity 최초 실행 시 일어날 작업
@@ -32,8 +33,9 @@ class SongActivity : AppCompatActivity()   {
 
         setContentView(binding.root)
 
-        initClickListener()
+        songDB = SongDatabase.getInstance(this)!!
 
+        initClickListener()
         initPlayList()
 
         binding.songProgressSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -101,56 +103,8 @@ class SongActivity : AppCompatActivity()   {
         mediaPlayer = null  // 미디어 플레이어 해제
     }
 
-    private fun initClickListener() {
-        binding.songDownIb.setOnClickListener {  // 다시 mainActivity로 돌아감
-            finish()
-        }
-
-        // 재생, 일시정지 버튼 관리
-        binding.songMiniplayerIv.setOnClickListener {
-            setPlayerStatus(true)
-        }
-        binding.songPauseIv.setOnClickListener {
-            setPlayerStatus(false)
-        }
-
-        // 기본재생, 전체재생, 한곡재생 관리
-        binding.songRepeatOffIv.setOnClickListener {
-            setRepeatStatus(true)
-        }
-        binding.songRepeatOnIv.setOnClickListener {
-            restartTimer()  // 한곡재생 버튼을 눌렀을 때는 thread 재시작 해주기
-            setRepeatOneStatus(true)
-        }
-        binding.songRepeatOnOneIv.setOnClickListener {
-            setRepeatOneStatus(false)
-        }
-
-        // 기본재생, 랜덤재생 관리
-        binding.songRandomOffIv.setOnClickListener {
-            setRandomStatus(true)
-        }
-        binding.songRandomOnIv.setOnClickListener {
-            setRandomStatus(false)
-        }
-
-        // 좋아요 버튼 관리
-        binding.songLikeIv.setOnClickListener {
-            setLikeStatus(songs[nowPos].isLike)
-        }
-
-        // 다음 곡, 이전 곡 재생 관리
-        binding.songNextIv.setOnClickListener {
-            moveSong(+1)
-        }
-        binding.songPreviousIv.setOnClickListener {
-            moveSong(-1)
-        }
-    }
-
     private fun initPlayList() {  // 플레이리스트 생성
-        songDB = SongDatabase.getInstance(this)!!
-        songs.addAll(songDB.songDao().getSongs())  // 데이터베이스의 재생 목록을 가져옴
+        songs.addAll(songDB.songDao().getPlayList(true))  // 데이터베이스의 재생 목록을 가져옴
     }
 
     private fun initSong(){  // mainActivity에서 값 받아오기
@@ -222,6 +176,53 @@ class SongActivity : AppCompatActivity()   {
         setPlayer(songs[nowPos])
         startTimer()  // 재시작
         setPlayerStatus(true)
+    }
+
+    private fun initClickListener() {
+        binding.songDownIb.setOnClickListener {  // 다시 mainActivity로 돌아감
+            finish()
+        }
+
+        // 재생, 일시정지 버튼 관리
+        binding.songMiniplayerIv.setOnClickListener {
+            setPlayerStatus(true)
+        }
+        binding.songPauseIv.setOnClickListener {
+            setPlayerStatus(false)
+        }
+
+        // 기본재생, 전체재생, 한곡재생 관리
+        binding.songRepeatOffIv.setOnClickListener {
+            setRepeatStatus(true)
+        }
+        binding.songRepeatOnIv.setOnClickListener {
+            restartTimer()  // 한곡재생 버튼을 눌렀을 때는 thread 재시작 해주기
+            setRepeatOneStatus(true)
+        }
+        binding.songRepeatOnOneIv.setOnClickListener {
+            setRepeatOneStatus(false)
+        }
+
+        // 기본재생, 랜덤재생 관리
+        binding.songRandomOffIv.setOnClickListener {
+            setRandomStatus(true)
+        }
+        binding.songRandomOnIv.setOnClickListener {
+            setRandomStatus(false)
+        }
+
+        // 좋아요 버튼 관리
+        binding.songLikeIv.setOnClickListener {
+            setLikeStatus(songs[nowPos].isLike)
+        }
+
+        // 다음 곡, 이전 곡 재생 관리
+        binding.songNextIv.setOnClickListener {
+            moveSong(+1)
+        }
+        binding.songPreviousIv.setOnClickListener {
+            moveSong(-1)
+        }
     }
 
     private fun setPlayerStatus(isPlaying : Boolean) {  // 재생, 일지정지 관리

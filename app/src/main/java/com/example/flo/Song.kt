@@ -18,7 +18,8 @@ data class Song(
     var music : String = "",  // mp3 파일명
     var current : Int = 0,  // MediaPlayer로 재생할 지점
     var isLike : Boolean = false,
-    var albumIdx : Int = 0
+    var albumIdx : Int = 0,
+    var isInPlaylist : Boolean
 ){
     @PrimaryKey(autoGenerate = true) var id : Int = 0
 }

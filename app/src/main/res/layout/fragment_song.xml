@@ -6,12 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/album_songs_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="@drawable/textview_background_radius"
+        android:backgroundTint="#F6F6F6"
         android:layout_marginTop="20dp"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,72 +25,95 @@
             android:layout_height="wrap_content"
             android:text="내 취향 MIX"
             android:textColor="@color/black"
-            android:paddingTop="5dp"
+            android:paddingStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/album_songs_toggle_off_iv"
             android:layout_width="50dp"
-            android:layout_height="28dp"
+            android:layout_height="30dp"
             android:src="@drawable/btn_toggle_off"
-            android:layout_marginStart="5dp" />
+            app:layout_constraintStart_toEndOf="@+id/album_songs_favorite_tv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
             android:id="@+id/album_songs_toggle_on_iv"
             android:layout_width="50dp"
-            android:layout_height="28dp"
+            android:layout_height="30dp"
             android:src="@drawable/btn_toggle_on"
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/album_songs_favorite_tv"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/album_songs_favorite_tv"
-            app:layout_constraintBottom_toBottomOf="@id/album_songs_favorite_tv"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/album_songs_check_all_iv"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/btn_playlist_select_off"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/album_songs_layout" />
-
-    <TextView
-        android:id="@+id/album_songs_check_all_tv"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/album_check_all_ly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:text="전체선택"
-        android:textColor="@color/black"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@id/album_songs_check_all_iv"
-        app:layout_constraintStart_toEndOf="@id/album_songs_check_all_iv"
-        app:layout_constraintTop_toTopOf="@+id/album_songs_check_all_iv" />
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/album_songs_layout"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/album_songs_play_iv"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginEnd="1dp"
-        android:src="@drawable/ic_browse_arrow_right"
-        app:layout_constraintTop_toTopOf="@+id/album_songs_check_all_iv"
-        app:layout_constraintEnd_toStartOf="@+id/album_songs_play_all_tv"
-        app:layout_constraintTop_toBottomOf="@+id/album_songs_layout" />
+        <ImageView
+            android:id="@+id/album_songs_check_all_iv"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/btn_playlist_select_off"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
-        android:id="@+id/album_songs_play_all_tv"
+        <TextView
+            android:id="@+id/album_songs_check_all_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:text="전체선택"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/album_songs_check_all_iv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/album_listen_all_ly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
-        android:text="전체듣기"
-        android:textColor="@color/black"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@id/album_songs_play_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/album_songs_play_iv" />
+        app:layout_constraintTop_toTopOf="@+id/album_check_all_ly"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/album_listen_all_iv"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="1dp"
+            android:src="@drawable/ic_browse_arrow_right"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/album_listen_all_tv" />
+
+        <TextView
+            android:id="@+id/album_listen_all_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체듣기"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/album_songs_list_rv"
@@ -97,7 +123,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/album_songs_check_all_iv"
+        app:layout_constraintTop_toBottomOf="@id/album_check_all_ly"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

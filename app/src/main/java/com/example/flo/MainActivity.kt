@@ -146,7 +146,6 @@ class MainActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
 
         editor.putInt("songId", songs[nowPos].id)
-
         editor.apply()  // 내부 저장소에 값 저장
     }
 
@@ -169,7 +168,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPlayList() {  // 플레이리스트 생성
-        songs.addAll(songDB.songDao().getPlayList("01"))
+        songs.addAll(songDB.songDao().getPlayList(true))
     }
 
     private fun initSong(){
@@ -255,24 +254,61 @@ class MainActivity : AppCompatActivity() {
         setPlayerStatus(true)
     }
 
-    fun changeSong() {  // 다른 fragment에서 음악을 바꿀 때 사용할 함수
-        mediaPlayer?.reset()  // 음악 멈춤
+    fun changeSong() {  // 앨범의 수록곡 재생
+        mediaPlayer?.reset()  // 음악을 멈춘 후 현재 songs[nowPos]값 저장
         progress.interrupt()
 
         songDB.songDao().updateSecondById(0, songs[nowPos].id)
         songDB.songDao().updateIsPlayingById(false, songs[nowPos].id)
         songDB.songDao().updateCurrentById(0, songs[nowPos].id)
 
+        // 해당 수록곡을 플레이리스트에 추가해줌
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // 새로운 노래 정보 다운로드
-        val songJson = sharedPreferences.getString("songData", null)
-        songs[nowPos] = gson.fromJson(songJson, Song::class.java)
+        val songID = sharedPreferences.getInt("songId", 0)
+
+        songs.add(nowPos + 1, songDB.songDao().getSong(songID))
+        songDB.songDao().updateIsInPlaylistById(true, songID)
+
+        songs[nowPos + 1] = songDB.songDao().getSong(songID)
 
         // 음악 초기화
         startProgress()
         progressBar()
-        setMiniPlayer(songs[nowPos])
 
+        setMiniPlayer(songs[nowPos + 1])
         setPlayerStatus(true)
+    }
+
+    fun playAlbum(albumIdx : Int) {  // 앨범 전체 재생
+        // 현재 곡을 멈춘 후 값 초기화
+        mediaPlayer?.reset()
+        progress.interrupt()
+
+        songDB.songDao().updateSecondById(0, songs[nowPos].id)
+        songDB.songDao().updateIsPlayingById(false, songs[nowPos].id)
+        songDB.songDao().updateCurrentById(0, songs[nowPos].id)
+
+        // 플레이리스트 초기화
+        updatePlaylist(false)  // 플레이리스트에서 제거
+        songs.clear()
+
+        // 플레이리스트를 해당 앨범으로 바꿈
+        songs.addAll(songDB.songDao().getSongsInAlbum(albumIdx))
+        updatePlaylist(true)  // 플레이리스트로 삽입
+
+        // 앨범의 첫 곡부터 재생
+        nowPos = 0
+        startProgress()
+        progressBar()
+
+        setMiniPlayer(songs[0])
+        setPlayerStatus(true)
+    }
+
+    private fun updatePlaylist(change : Boolean) {
+        for(i in 0 until songs.size) {  // songs 안에 있는 곡들의 isInPlaylist 값을 모두 바꿔줌
+            songDB.songDao().updateIsInPlaylistById(change, songs[i].id)
+        }
     }
 
     private fun startProgress(){  // Progress thread 시작
@@ -314,6 +350,46 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initBottomNavigation(){
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, HomeFragment())
+            .commitAllowingStateLoss()
+
+        binding.mainBnv.setOnItemSelectedListener{ item ->
+            when (item.itemId) {
+
+                R.id.homeFragment -> {  // home 화면 실행
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, HomeFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.lookFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, LookFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.searchFragment -> {  // 검색 화면 실행
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, SearchFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.lockerFragment -> {  // 보관함 화면 실행
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, LockerFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
+    }
+
     private fun inputDummySongs(){
         val songDB = SongDatabase.getInstance(this)!!
         val songs = songDB.songDao().getSongs()
@@ -332,7 +408,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                true
             )
         )
 
@@ -348,7 +425,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
 
@@ -364,7 +442,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
 
@@ -380,7 +459,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
 
@@ -396,7 +476,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
         songDB.songDao().insert(
@@ -411,7 +492,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
 
@@ -427,7 +509,8 @@ class MainActivity : AppCompatActivity() {
                 "music_tomboy",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
 
@@ -443,7 +526,8 @@ class MainActivity : AppCompatActivity() {
                 "music_mybag",
                 0,
                 false,
-                0
+                0,
+                false
             )
         )
 
@@ -459,7 +543,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                true
             )
         )
 
@@ -475,7 +560,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -491,7 +577,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -507,7 +594,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -523,7 +611,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -539,7 +628,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -555,7 +645,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -571,7 +662,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -587,7 +679,8 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
@@ -603,13 +696,14 @@ class MainActivity : AppCompatActivity() {
                 "music_lilac",
                 0,
                 false,
-                1
+                1,
+                false
             )
         )
 
         songDB.songDao().insert(
             Song(
-                "10",
+                "01",
                 "Next Level",
                 "에스파 (AESPA)",
                 R.drawable.img_album_exp3,
@@ -619,7 +713,8 @@ class MainActivity : AppCompatActivity() {
                 "music_nextlevel",
                 0,
                 false,
-                2
+                2,
+                true
             )
         )
 
@@ -635,7 +730,8 @@ class MainActivity : AppCompatActivity() {
                 "music_boywithluv",
                 0,
                 false,
-                3
+                3,
+                true
             )
         )
 
@@ -651,7 +747,8 @@ class MainActivity : AppCompatActivity() {
                 "music_bboombboom",
                 0,
                 false,
-                4
+                4,
+                true
             )
         )
 
@@ -667,7 +764,8 @@ class MainActivity : AppCompatActivity() {
                 "music_weekend",
                 0,
                 false,
-                5
+                5,
+                true
             )
         )
 
@@ -717,43 +815,4 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun initBottomNavigation(){
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frm, HomeFragment())
-            .commitAllowingStateLoss()
-
-        binding.mainBnv.setOnItemSelectedListener{ item ->
-            when (item.itemId) {
-
-                R.id.homeFragment -> {  // home 화면 실행
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, HomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.lookFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, LookFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-
-                R.id.searchFragment -> {  // 검색 화면 실행
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, SearchFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.lockerFragment -> {  // 보관함 화면 실행
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, LockerFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-            }
-            false
-        }
-    }
 }

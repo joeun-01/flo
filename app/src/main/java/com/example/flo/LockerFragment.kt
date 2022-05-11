@@ -14,7 +14,7 @@ import kotlin.math.log
 class LockerFragment : Fragment() {
 
     lateinit var binding: FragmentLockerBinding
-    private val information = arrayListOf("저장한 곡", "음악파일")
+    private val information = arrayListOf("저장한 곡", "음악파일", "저장한 앨범")
 
     override fun onCreateView(
         inflater: LayoutInflater,

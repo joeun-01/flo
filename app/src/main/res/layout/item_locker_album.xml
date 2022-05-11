@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:paddingVertical="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_album_locker_cover_img_cardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/item_album_locker_cover_img_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_album_exp2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/item_album_locker_ly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="@+id/item_album_locker_cover_img_cardView"
+        app:layout_constraintBottom_toBottomOf="@+id/item_album_locker_cover_img_cardView"
+        app:layout_constraintStart_toEndOf="@+id/item_album_locker_cover_img_cardView">
+
+        <TextView
+            android:id="@+id/item_album_locker_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LILAC"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/item_album_cover_img_cardView"
+            app:layout_constraintTop_toBottomOf="@id/item_album_cover_img_cardView" />
+
+        <TextView
+            android:id="@+id/item_album_locker_singer_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이유 (IU)"
+            android:textColor="@color/colorPrimaryGrey"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@id/item_album_cover_img_cardView"
+            app:layout_constraintTop_toBottomOf="@id/item_album_title_tv" />
+
+        <TextView
+            android:id="@+id/item_album_licker_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021.03.25 | 정규 | 댄스 팝"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/btn_player_play"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_album_locker_more_iv"/>
+
+    <ImageView
+        android:id="@+id/item_album_locker_more_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/btn_player_more"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

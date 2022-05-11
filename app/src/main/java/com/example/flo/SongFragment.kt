@@ -12,7 +12,6 @@ import com.google.gson.Gson
 
 class SongFragment : Fragment() {
     lateinit var binding :FragmentSongBinding
-    private var gson : Gson = Gson()
 
     lateinit var songDB : SongDatabase
 
@@ -29,8 +28,6 @@ class SongFragment : Fragment() {
         val sharedPreferences = requireActivity().getSharedPreferences("album", MODE_PRIVATE)
         val albumID = sharedPreferences.getInt("albumID", 0)
 
-        val songList = songDB.songDao().getSongsInAlbum(albumID)
-
         binding.albumSongsToggleOffIv.setOnClickListener {  // toggle 켜기
             setToggleStatus(false)
         }
@@ -38,7 +35,12 @@ class SongFragment : Fragment() {
             setToggleStatus(true)
         }
 
+        binding.albumListenAllLy.setOnClickListener {
+            (activity as MainActivity).playAlbum(albumID)
+        }
 
+        // recyclerView에 적용
+        val songList = songDB.songDao().getSongsInAlbum(albumID)
 
         val songRVAdapter = SongRVAdapter(songList)
         binding.albumSongsListRv.adapter = songRVAdapter
@@ -56,10 +58,9 @@ class SongFragment : Fragment() {
     private fun playAlbum(song : Song){
         val sharedPreferences = requireActivity().getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        val songJson = gson.toJson(song)  // Json 객체 생성
-        editor.putString("songData", songJson)
 
-        editor.apply()  // 내부 저장소에 값 저장
+        editor.putInt("songId", song.id)  // 내부 저장소에 값 저장
+        editor.apply()
 
         (activity as MainActivity).changeSong()
     }

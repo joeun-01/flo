@@ -20,7 +20,6 @@ import com.google.gson.Gson
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
-    private val gson : Gson = Gson()
     private lateinit var slide : AutoSlide
     private var position : Int = 0
 
@@ -54,7 +53,7 @@ class HomeFragment : Fragment() {
                 changeAlbumFragment(album)
             }
 
-            override fun onPlayAlbum(albumID: Int) {  // albumID를 받아옴
+            override fun onPlayAlbum(albumID: Int) {  // albumID를 받아와서 앨범 첫 곡부터 전체재생
                 playAlbum(albumID)
             }
 
@@ -98,16 +97,8 @@ class HomeFragment : Fragment() {
             .commitAllowingStateLoss()
     }
 
-    private fun playAlbum(albumID : Int) {  // albumID를 이용하여 수록곡을 불러옴
-        val sharedPreferences = requireActivity().getSharedPreferences("song", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        val songJson = gson.toJson(songDB.songDao().getSongsInAlbum(albumID)[0])  // Json 객체 생성
-        editor.putString("songData", songJson)
-
-        editor.apply()  // 내부 저장소에 값 저장
-
-        (activity as MainActivity).changeSong()
-//        Toast.makeText(activity, "$songJson", Toast.LENGTH_LONG).show()
+    private fun playAlbum(albumID : Int) {  // albumID를 이용하여 앨범 전체재생
+        (activity as MainActivity).playAlbum(albumID)
     }
 
     private fun setPage(){  // page를 넘겨주는 함수
