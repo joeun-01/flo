@@ -50,13 +50,16 @@ class LoginActivity : AppCompatActivity() {
 
         val user = songDB.userDao().getUser(email, password)  // 유저가 회원가입이 되어있는 지 확인
 
+        // 유저 값이 비어있지 않으면 로그인 완료
         user?.let{
             Log.d("LOGIN_ACT/GET_USER", "userId: ${user.id}, $user")
             saveJwt(user.id)
             startMainActivity()  // 로그인이 완료되면 메인엑티비티로 돌아감
         }
 
-        Toast.makeText(this, "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+        if(user == null){
+            Toast.makeText(this, "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun saveJwt(jwt : Int) {  // userIdx 저장

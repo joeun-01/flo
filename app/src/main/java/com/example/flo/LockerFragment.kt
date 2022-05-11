@@ -1,5 +1,6 @@
 package com.example.flo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.flo.databinding.FragmentLockerBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlin.math.log
 
 class LockerFragment : Fragment() {
 
     lateinit var binding: FragmentLockerBinding
+
+    lateinit var userDB : SongDatabase
+
     private val information = arrayListOf("저장한 곡", "음악파일", "저장한 앨범")
 
     override fun onCreateView(
@@ -22,6 +25,8 @@ class LockerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLockerBinding.inflate(inflater, container, false)
+
+        userDB = SongDatabase.getInstance(requireActivity())!!
 
         val lockerAdapter = LockerVPAdapter(this)
         binding.lockerContentVp.adapter = lockerAdapter
@@ -49,6 +54,7 @@ class LockerFragment : Fragment() {
         return sharedPreferences!!.getInt("jwt", 0)  // jwt 값이 없으면 0을 반환
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {  // jwt 값에 따라 로그인을 띄울지 로그아웃을 띄울지 결정
         val jwt : Int = getJwt()
 
@@ -60,6 +66,10 @@ class LockerFragment : Fragment() {
         }
         else {  // jwt 값이 있을 경우
             binding.lockerLoginTv.text = "로그이웃"
+
+            binding.lockerNameTv.text = userDB.userDao().getUserName(jwt) + " 님"
+            binding.lockerNameTv.visibility = View.VISIBLE
+
             binding.lockerLoginTv.setOnClickListener {  // 로그아웃 진행
                 logout()
                 startActivity(Intent(activity, MainActivity::class.java))

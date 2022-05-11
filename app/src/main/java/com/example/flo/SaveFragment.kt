@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.flo.databinding.BottomSheetDialogBinding
 import com.example.flo.databinding.FragmentSaveBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class SaveFragment : Fragment() {
     lateinit var binding: FragmentSaveBinding
+
     lateinit var songDB : SongDatabase
 
     override fun onCreateView(

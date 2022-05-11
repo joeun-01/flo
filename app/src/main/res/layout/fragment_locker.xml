@@ -19,6 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
+        android:id="@+id/locker_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toTopOf="@id/locker_login_tv"
+        app:layout_constraintBottom_toBottomOf="@id/locker_login_tv"
+        app:layout_constraintEnd_toStartOf="@id/locker_login_tv"/>
+
+    <TextView
         android:id="@+id/locker_login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

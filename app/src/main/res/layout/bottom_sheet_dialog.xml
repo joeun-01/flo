@@ -26,6 +26,7 @@
             android:scaleType="centerInside"/>
 
         <TextView
+            android:id="@+id/listen_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="듣기"
@@ -52,6 +53,7 @@
             android:scaleType="centerInside"/>
 
         <TextView
+            android:id="@+id/playlist_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="재생목록"
@@ -78,6 +80,7 @@
             android:scaleType="centerInside"/>
 
         <TextView
+            android:id="@+id/mylist_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="내 리스트"
@@ -97,16 +100,17 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/save_iv"
+            android:id="@+id/delete_iv"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:src="@drawable/btn_editbar_download"
+            android:src="@drawable/btn_editbar_delete"
             android:scaleType="centerInside"/>
 
         <TextView
+            android:id="@+id/delete_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="저장하기"
+            android:text="삭제하기"
             android:textColor="@color/white"
             android:textAlignment="center"/>
 
