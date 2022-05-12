@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/bottomDialog_playlist"
-        app:layout_constraintEnd_toStartOf="@+id/bottomDialog_save">
+        app:layout_constraintEnd_toStartOf="@+id/bottomDialog_delete">
 
         <ImageView
             android:id="@+id/mylist_iv"
@@ -90,7 +90,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bottomDialog_save"
+        android:id="@+id/bottomDialog_delete"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.ItemSaveBinding
 
 class SaveRVAdapter() : RecyclerView.Adapter<SaveRVAdapter.ViewHolder>() {
-    private val songs = ArrayList<Song>()
+    private val songs = arrayListOf<Song>()
 
     interface MyItemClickListener{
         fun onRemoveSong(songId: Int)
@@ -29,6 +29,12 @@ class SaveRVAdapter() : RecyclerView.Adapter<SaveRVAdapter.ViewHolder>() {
     @SuppressLint("NotifyDataSetChanged")
     fun removeSongs(position: Int){
         songs.removeAt(position)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeSongAll() {
+        songs.clear()
         notifyDataSetChanged()
     }
 

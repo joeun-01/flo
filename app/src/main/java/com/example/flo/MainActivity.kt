@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private var mediaPlayer : MediaPlayer? = null
     lateinit var progress : Progress
-    private var gson : Gson = Gson()
 
     private val songs = arrayListOf<Song>()
     lateinit var songDB : SongDatabase  // 데이터베이스의 song 목록을 가져와서 songs에 저장
@@ -266,16 +265,17 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)  // 새로운 노래 정보 다운로드
         val songID = sharedPreferences.getInt("songId", 0)
 
-        songs.add(nowPos + 1, songDB.songDao().getSong(songID))
+        nowPos++
+        songs.add(nowPos, songDB.songDao().getSong(songID))
         songDB.songDao().updateIsInPlaylistById(true, songID)
 
-        songs[nowPos + 1] = songDB.songDao().getSong(songID)
+        songs[nowPos] = songDB.songDao().getSong(songID)
 
         // 음악 초기화
         startProgress()
         progressBar()
 
-        setMiniPlayer(songs[nowPos + 1])
+        setMiniPlayer(songs[nowPos])
         setPlayerStatus(true)
     }
 
