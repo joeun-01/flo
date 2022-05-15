@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.example.flo.databinding.ActivityMainBinding
-import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
@@ -115,6 +114,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        Log.d("MAIN/JWT_TO_SERVER", getJwt().toString())
+
         initBottomNavigation()
 
     }
@@ -164,6 +165,12 @@ class MainActivity : AppCompatActivity() {
         editor.putInt("songId", songs[nowPos].id)
 
         editor.apply()  // 내부 저장소에 값 저장
+    }
+
+    private fun getJwt() : String? {
+        val sharedPreferences = this.getSharedPreferences("auth2", MODE_PRIVATE)
+
+        return sharedPreferences!!.getString("jwt", "")  // jwt 값이 없으면 0을 반환
     }
 
     private fun initPlayList() {  // 플레이리스트 생성

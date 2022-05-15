@@ -2,13 +2,12 @@ package com.example.flo
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flo.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), LoginView {
     lateinit var binding : ActivityLoginBinding
     lateinit var songDB : SongDatabase
 
@@ -48,30 +47,57 @@ class LoginActivity : AppCompatActivity() {
         val email : String = binding.loginIdEt.text.toString() + "@" + binding.loginEmailEt.text.toString()
         val password : String = binding.loginPasswordEt.text.toString()
 
-        val user = songDB.userDao().getUser(email, password)  // 유저가 회원가입이 되어있는 지 확인
+//        val user = songDB.userDao().getUser(email, password)  // 유저가 회원가입이 되어있는 지 확인
+//
+//        // 유저 값이 비어있지 않으면 로그인 완료
+//        user?.let{
+//            Log.d("LOGIN_ACT/GET_USER", "userId: ${user.id}, $user")
+////            saveJwt(user.id)
+//            startMainActivity()  // 로그인이 완료되면 메인엑티비티로 돌아감
+//        }
 
-        // 유저 값이 비어있지 않으면 로그인 완료
-        user?.let{
-            Log.d("LOGIN_ACT/GET_USER", "userId: ${user.id}, $user")
-            saveJwt(user.id)
-            startMainActivity()  // 로그인이 완료되면 메인엑티비티로 돌아감
-        }
+        val authService = AuthService()
 
-        if(user == null){
-            Toast.makeText(this, "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
-        }
+        authService.setLoginView(this)
+        authService.login(User("", email, password))
+
+//        if(user == null){
+//            Toast.makeText(this, "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+//        }
     }
 
-    private fun saveJwt(jwt : Int) {  // userIdx 저장
-        val sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE)
+//    private fun saveJwt(jwt : Int) {  // userIdx 저장
+//        val sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE)
+//        val editor = sharedPreferences.edit()
+//
+//        editor.putInt("jwt", jwt)
+//        editor.apply()
+//    }
+
+    private fun saveJwt2(jwt : String) {  // userIdx 저장
+        val sharedPreferences = getSharedPreferences("auth2", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        editor.putInt("jwt", jwt)
+        editor.putString("jwt", jwt)
         editor.apply()
     }
 
     private fun startMainActivity() {  // 로그인이 완료되면 다시 메인으로
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onLoginSuccess(code : Int, result: Result) {
+        when(code) {
+            1000 -> {  // 로그인 완료
+                saveJwt2(result.jwt)
+                startMainActivity()
+            }
+        }
+    }
+
+    override fun onLoginFailure(message: String) {
+        binding.loginEmailErrorTv.visibility = View.VISIBLE
+        binding.loginEmailErrorTv.text = message
     }
 }

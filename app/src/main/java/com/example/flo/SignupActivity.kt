@@ -1,13 +1,12 @@
 package com.example.flo
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flo.databinding.ActivitySignupBinding
 
-class SignupActivity : AppCompatActivity() {
+class SignupActivity : AppCompatActivity(), SignUpView {
     lateinit var binding : ActivitySignupBinding
     lateinit var userDB : SongDatabase
 
@@ -19,9 +18,8 @@ class SignupActivity : AppCompatActivity() {
 
         userDB = SongDatabase.getInstance(this)!!
 
-        binding.sighupSuccessTv.setOnClickListener {  // 회원가입 버튼을 누르면
+        binding.signupSuccessTv.setOnClickListener {  // 회원가입 버튼을 누르면
             signUp()  // 확인 후
-            finish()  // 회원가입 창 종료
         }
 
     }
@@ -33,8 +31,29 @@ class SignupActivity : AppCompatActivity() {
 
         return User(name, email, password)
     }
+//
+//    private fun signUp() {  // 회원정보를 제대로 입력했는지 확인 후 회원가입 승인
+//        if(binding.signupNameEt.text.toString().isEmpty()){
+//            Toast.makeText(this, "이름을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        if(binding.signupIdEt.text.toString().isEmpty() || binding.signupEmailEt.text.toString().isEmpty()) {
+//            Toast.makeText(this, "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//
+//        if(binding.signupPasswordEt.text.toString().isEmpty() != binding.signupPasswordCheckEt.text.toString().isEmpty()) {
+//            Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//
+//        userDB.userDao().insert(getUser())  // 다 괜찮으면 UserTable에 저장
+//
+//        val user = userDB.userDao().getUsers()
+//        Log.d("SIGNUPDACT", user.toString())
+//    }
 
-    private fun signUp() {  // 회원정보를 제대로 입력했는지 확인 후 회원가입 승인
+    private fun signUp() {  // 네트워크를 이용하여 회원가입 진행
         if(binding.signupNameEt.text.toString().isEmpty()){
             Toast.makeText(this, "이름을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show()
         }
@@ -49,9 +68,20 @@ class SignupActivity : AppCompatActivity() {
             return
         }
 
-        userDB.userDao().insert(getUser())  // 다 괜찮으면 UserTable에 저장
+        val authService = AuthService()
 
-        val user = userDB.userDao().getUsers()
-        Log.d("SIGNUPDACT", user.toString())
+        authService.setSignUpView(this)
+        authService.signUp(getUser())
+    }
+
+    override fun onSignUpSuccess() {
+        binding.signupEmailErrorTv.visibility = View.GONE
+        finish()  // 회원가입 성공
+    }
+
+    override fun onSignUpFailure(message: String) {
+        // 에러 메세지 띄우기
+        binding.signupEmailErrorTv.visibility = View.VISIBLE
+        binding.signupEmailErrorTv.text = message
     }
 }
