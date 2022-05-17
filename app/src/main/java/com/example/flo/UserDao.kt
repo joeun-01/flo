@@ -20,7 +20,10 @@ interface UserDao {
     @Query("SELECT * FROM UserTable WHERE email = :email AND password = :password")
     fun getUser(email : String, password : String) : User?
 
-    @Query("SELECT name FROM UserTable WHERE id = :id")
-    fun getUserName(id : Int) : String
+    @Query("SELECT name FROM UserTable WHERE jwt = :jwt")
+    fun getUserName(jwt : String?) : String
+
+    @Query("UPDATE UserTable SET jwt = :jwt WHERE email = :email")  // isLike 값 업데이트
+    fun updateJWT(jwt : String, email : String)
 
 }

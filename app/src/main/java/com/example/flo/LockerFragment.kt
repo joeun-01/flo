@@ -48,17 +48,17 @@ class LockerFragment : Fragment() {
         initView()  // 로그인 창으로 갔다가 돌아오면 값이 바껴야하기 때문에 onStart에서 호출
     }
 
-    private fun getJwt() : Int {
-        val sharedPreferences = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+    private fun getJwt() : String? {
+        val sharedPreferences = requireActivity().getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)
 
-        return sharedPreferences!!.getInt("jwt", 0)  // jwt 값이 없으면 0을 반환
+        return sharedPreferences!!.getString("jwt", "")  // jwt 값이 없으면 0을 반환
     }
 
     @SuppressLint("SetTextI18n")
     private fun initView() {  // jwt 값에 따라 로그인을 띄울지 로그아웃을 띄울지 결정
-        val jwt : Int = getJwt()
+        val jwt : String? = getJwt()
 
-        if(jwt == 0) {  // jwt 값이 없을 경우
+        if(jwt == "") {  // jwt 값이 없을 경우
             binding.lockerLoginTv.text = "로그인"
             binding.lockerLoginTv.setOnClickListener {
                 startActivity(Intent(activity, LoginActivity::class.java))
@@ -78,7 +78,7 @@ class LockerFragment : Fragment() {
     }
 
     private fun logout() {
-        val sharedPreferences = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+        val sharedPreferences = activity?.getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)
         val editor = sharedPreferences!!.edit()
 
         editor.remove("jwt")  // jwt에 저장된 값을 지워줌

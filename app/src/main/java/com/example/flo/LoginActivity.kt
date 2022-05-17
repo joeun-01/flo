@@ -2,6 +2,7 @@ package com.example.flo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +10,10 @@ import com.example.flo.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), LoginView {
     lateinit var binding : ActivityLoginBinding
-    lateinit var songDB : SongDatabase
+    lateinit var userDB : SongDatabase
+
+    lateinit var email : String
+    lateinit var password : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +21,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        songDB = SongDatabase.getInstance(this)!!
+        userDB = SongDatabase.getInstance(this)!!
 
         binding.loginSignTv.setOnClickListener {  // 회원가입 창으로 넘어가기
             startActivity(Intent(this, SignupActivity::class.java))
@@ -44,9 +48,6 @@ class LoginActivity : AppCompatActivity(), LoginView {
             return
         }
 
-        val email : String = binding.loginIdEt.text.toString() + "@" + binding.loginEmailEt.text.toString()
-        val password : String = binding.loginPasswordEt.text.toString()
-
 //        val user = songDB.userDao().getUser(email, password)  // 유저가 회원가입이 되어있는 지 확인
 //
 //        // 유저 값이 비어있지 않으면 로그인 완료
@@ -56,10 +57,13 @@ class LoginActivity : AppCompatActivity(), LoginView {
 //            startMainActivity()  // 로그인이 완료되면 메인엑티비티로 돌아감
 //        }
 
+        email = binding.loginIdEt.text.toString() + "@" + binding.loginEmailEt.text.toString()
+        password = binding.loginPasswordEt.text.toString()
+
         val authService = AuthService()
 
         authService.setLoginView(this)
-        authService.login(User(email, password, ""))
+        authService.login(User(email, password, "", ""))
 
 //        if(user == null){
 //            Toast.makeText(this, "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
@@ -91,6 +95,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
         when(code) {
             1000 -> {  // 로그인 완료
                 saveJwt2(result.jwt)
+                userDB.userDao().updateJWT(result.jwt, email)
+                Log.d("USER", userDB.userDao().getUser(email, password).toString())
                 startMainActivity()
             }
         }

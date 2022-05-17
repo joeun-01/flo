@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FLO">
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/splashTheme"
             >
 
             <intent-filter>
@@ -25,6 +24,7 @@
 
         </activity>
 
+        <activity android:name=".MainActivity"/>
         <activity android:name=".SongActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".SignupActivity"/>

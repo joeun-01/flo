@@ -46,8 +46,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {  // 최초 실행 시 해야할 작업들
         super.onCreate(savedInstanceState)
 
-        setTheme(R.style.Theme_FLO)  // splash 화면이 끝나면 MainActivity 화면을 띄워주어야 함
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
