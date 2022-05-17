@@ -29,7 +29,7 @@ class SignupActivity : AppCompatActivity(), SignUpView {
         val email : String = binding.signupIdEt.text.toString() + "@" + binding.signupEmailEt.text.toString()
         val password : String = binding.signupPasswordEt.text.toString()
 
-        return User(name, email, password)
+        return User(email, password, name)
     }
 //
 //    private fun signUp() {  // 회원정보를 제대로 입력했는지 확인 후 회원가입 승인

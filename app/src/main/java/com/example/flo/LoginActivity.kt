@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
         val authService = AuthService()
 
         authService.setLoginView(this)
-        authService.login(User("", email, password))
+        authService.login(User(email, password, ""))
 
 //        if(user == null){
 //            Toast.makeText(this, "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
