@@ -76,34 +76,34 @@ class AlbumFragment : Fragment() {
         }
     }
 
-    private fun getJwt() : Int {
-        val sharedPreferences = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+    private fun getJwt() : String? {
+        val sharedPreferences = requireActivity().getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)
 
-        return sharedPreferences!!.getInt("jwt", 0)  // jwt 값이 없으면 0을 반환
+        return sharedPreferences!!.getString("jwt", "")  // jwt 값이 없으면 0을 반환
     }
 
-    private fun likeAlbum(userId : Int, albumId: Int) {
-        val like = Like(userId, albumId)  // 좋아요를 누르면 like table을 업데이트
+    private fun likeAlbum(jwt : String, albumId: Int) {
+        val like = Like(jwt, albumId)  // 좋아요를 누르면 like table을 업데이트
 
         songDB.albumDao().likeAlbum(like)
     }
 
     private fun isLikedAlbum(albumId: Int) : Boolean {  // 좋아요를 눌렀는지 확인
-        val userId = getJwt()
+        val jwt = getJwt()
 
-        val likeId = songDB.albumDao().isLikedAlbum(userId, albumId)
+        val likeId = songDB.albumDao().isLikedAlbum(jwt, albumId)
 
         return likeId != null  // 좋아요를 안하면 null -> false를 반환
     }
 
     private fun dislikedAlbum(albumId: Int) {  // 좋아요 삭제
-        val userId = getJwt()
+        val jwt = getJwt()
 
-        songDB.albumDao().dislikedAlbum(userId, albumId)
+        songDB.albumDao().dislikedAlbum(jwt, albumId)
     }
 
     private fun setOnLikeListener(album: Album) {
-        val userId = getJwt()
+        val jwt = getJwt()
 
         binding.albumLikeIv.setOnClickListener {
             if(isLiked) {  // 좋아요를 취소
@@ -112,7 +112,7 @@ class AlbumFragment : Fragment() {
             }
             else {
                 binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
-                likeAlbum(userId, album.id)
+                likeAlbum(jwt!!, album.id)
             }
         }
     }

@@ -44,10 +44,10 @@ class SavedAlbumFragment : Fragment() {
         savedAlbumRVAdapter.addAlbums(albumDB.albumDao().getLikedAlbums(getJwt()) as ArrayList)
     }
 
-    private fun getJwt() : Int {
-        val sharedPreferences = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+    private fun getJwt() : String? {
+        val sharedPreferences = activity?.getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)
 
-        return sharedPreferences!!.getInt("jwt", 0)  // jwt 값이 없으면 0을 반환
+        return sharedPreferences!!.getString("jwt", "")  // jwt 값이 없으면 0을 반환
     }
 
 }

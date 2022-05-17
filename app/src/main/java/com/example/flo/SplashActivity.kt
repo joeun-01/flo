@@ -44,6 +44,6 @@ class SplashActivity : AppCompatActivity(), AutoLoginView {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             finish()
-        }, 4000)
+        }, 5000)
     }
 }
