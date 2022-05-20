@@ -1,11 +1,13 @@
 package com.example.flo
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.flo.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -16,7 +18,7 @@ class AlbumFragment : Fragment() {
     private val information = arrayListOf("수록곡", "상세정보", "영상")  // Tab에 들어갈 내용
 
     lateinit var songDB : SongDatabase
-    lateinit var albumInfo : Album
+    private val gson : Gson = Gson()
 
     private var isLiked : Boolean= false
 
@@ -29,19 +31,20 @@ class AlbumFragment : Fragment() {
 
         songDB = SongDatabase.getInstance(requireActivity())!!
 
-        var albumIdx = arguments?.getInt("albumIdx")  // album.id를 불러옴
+        var album = arguments?.getString("album")  // album.id를 불러옴
+        var albumInfo = gson.fromJson(album, Albums::class.java)
 
-        albumInfo = songDB.songDao().getAlbum(albumIdx)
+//        albumInfo = songDB.songDao().getAlbum(albumIdx)
 
         // 현재 앨범에 대한 데이터를 반영
-        isLiked = isLikedAlbum(albumInfo.id)
+        isLiked = isLikedAlbum(albumInfo.albumIdx)
         setInit(albumInfo)
         setOnLikeListener(albumInfo)
 
         // SongFragment에 album ID 전달
         val sharedPreferences = requireActivity().getSharedPreferences("album", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
-        editor.putInt("albumID", albumInfo.id)
+        editor.putInt("albumID", albumInfo.albumIdx)
         editor.apply()  // 내부 저장소에 값 저장
 
         binding.albumBackIv.setOnClickListener {  // 다시 HomeFragment로 돌아감
@@ -63,10 +66,17 @@ class AlbumFragment : Fragment() {
         return binding.root
     }
 
-    private fun setInit(album : Album){  // album 정보 update
-        binding.albumAlbumIv.setImageResource((album.coverImg!!))
-        binding.albumMusicTitleTv.text = album.title.toString()
-        binding.albumSingerNameTv.text = album.singer.toString()
+    private fun setInit(album : Albums){  // album 정보 update
+        if(album.coverImgUrl == "" || album.coverImgUrl == null) {
+            // url 값이 비어있지 않으면
+        }
+        else {  // url을 넣어줌
+            Log.d("image", album.coverImgUrl)
+            Glide.with(requireContext()).load(album.coverImgUrl).into(binding.albumAlbumIv)
+        }
+
+        binding.albumMusicTitleTv.text = album.title
+        binding.albumSingerNameTv.text = album.singer
 
         if(isLiked) {
             binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
@@ -102,17 +112,17 @@ class AlbumFragment : Fragment() {
         songDB.albumDao().dislikedAlbum(jwt, albumId)
     }
 
-    private fun setOnLikeListener(album: Album) {
+    private fun setOnLikeListener(album: Albums) {
         val jwt = getJwt()
 
         binding.albumLikeIv.setOnClickListener {
             if(isLiked) {  // 좋아요를 취소
                 binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
-                dislikedAlbum(album.id)
+                dislikedAlbum(album.albumIdx)
             }
             else {
                 binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
-                likeAlbum(jwt!!, album.id)
+                likeAlbum(jwt!!, album.albumIdx)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.flo
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flo.databinding.FragmentSongBinding
 import com.google.gson.Gson
 
-class SongFragment : Fragment() {
+class SongFragment : Fragment(), SongView {
     lateinit var binding :FragmentSongBinding
 
     lateinit var songDB : SongDatabase
@@ -25,6 +26,7 @@ class SongFragment : Fragment() {
         songDB = SongDatabase.getInstance(requireActivity())!!
 
         // albumID 불러오기
+
         val sharedPreferences = requireActivity().getSharedPreferences("album", MODE_PRIVATE)
         val albumID = sharedPreferences.getInt("albumID", 0)
 
@@ -40,26 +42,60 @@ class SongFragment : Fragment() {
         }
 
         // recyclerView에 적용
-        val songList = songDB.songDao().getSongsInAlbum(albumID)
-
-        val songRVAdapter = SongRVAdapter(songList)
-        binding.albumSongsListRv.adapter = songRVAdapter
-        binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-        songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
-            override fun onPlayAlbum(song : Song) {
-                playAlbum(song)
-            }
-        })
+        // val songList = songDB.songDao().getSongsInAlbum(albumID)
 
         return binding.root
     }
 
-    private fun playAlbum(song : Song){
+    override fun onStart() {
+        super.onStart()
+
+        val sharedPreferences = requireActivity().getSharedPreferences("album", MODE_PRIVATE)
+        val albumIdx = sharedPreferences.getInt("albumID", 0)
+
+        getAlbumSongs(albumIdx)
+    }
+
+    private fun initRecyclerView(result: TrackResult) {
+        // RecyclerView 어뎁터 연결
+
+        val songRVAdapter = SongRVAdapter(requireContext(), result)
+        binding.albumSongsListRv.adapter = songRVAdapter
+        binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
+            override fun onPlayAlbum(song : Track) {
+                playAlbumSongs(song)
+            }
+        })
+
+    }
+
+    private fun getAlbumSongs(albumIdx : Int) {
+        val trackService = AlbumService()
+
+        trackService.setSongView(this)
+        trackService.getAlbumSongs(albumIdx)
+
+    }
+
+    override fun onGetTrackLoading() {
+
+    }
+
+    override fun onGetTrackSuccess(code: Int, result: TrackResult) {
+        initRecyclerView(result)
+    }
+
+    override fun onGetTrackFailure(code: Int, message: String) {
+        Log.d("SONG_FRAG/SONG-RESPONSE", message)
+    }
+
+    private fun playAlbumSongs(song : Track){
         val sharedPreferences = requireActivity().getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
 
-        editor.putInt("songId", song.id)  // 내부 저장소에 값 저장
+        editor.putInt("songId", song.songIdx)  // 내부 저장소에 값 저장
         editor.apply()
 
         (activity as MainActivity).changeSong()

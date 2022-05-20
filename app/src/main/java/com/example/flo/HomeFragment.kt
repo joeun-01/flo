@@ -1,6 +1,5 @@
 package com.example.flo
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -17,14 +15,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeView {
 
     lateinit var binding: FragmentHomeBinding
     private lateinit var slide : AutoSlide
     private var position : Int = 0
 
     lateinit var songDB : SongDatabase
-    private var albumDatas = ArrayList<Album>()
+    private val gson : Gson = Gson()
 
     val handler = Handler(Looper.getMainLooper()){
         setPage()  // message를 받으면 page를 넘김
@@ -39,28 +37,6 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         songDB = SongDatabase.getInstance(requireActivity())!!
-
-        albumDatas.addAll(songDB.albumDao().getAlbums())
-
-        // RecyclerView 어뎁터 연결
-        val albumRVAdapter = AlbumRVAdapter(albumDatas)
-        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
-        // LayoutManager를 통해 Layout 설정
-        binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        albumRVAdapter.setMyItemClickListener(object : AlbumRVAdapter.MyItemClickListener{
-            override fun onItemClick(album: Album) {
-                changeAlbumFragment(album)
-            }
-
-            override fun onPlayAlbum(albumID: Int) {  // albumID를 받아와서 앨범 첫 곡부터 전체재생
-                playAlbum(albumID)
-            }
-
-            override fun onRemoveAlbum(position: Int) {
-                albumRVAdapter.removeItem(position)
-            }
-        })
 
         // 배너 ViewPager 어뎁터 연결
         val bannerAdapter = BannerVPAdapter(this)
@@ -87,11 +63,63 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun changeAlbumFragment(album: Album) {  // fragment를 전환하면서 Album 데이터를 넘겨줌
+    override fun onStart() {
+        super.onStart()
+        getAlbums()
+    }
+
+    private fun initRecyclerView(result: AlbumResult) {
+
+//        albumDatas.addAll(songDB.albumDao().getAlbums())
+
+        // RecyclerView 어뎁터 연결
+        val albumRVAdapter = AlbumRVAdapter(requireContext(), result)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
+        // LayoutManager를 통해 Layout 설정
+        binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        albumRVAdapter.setMyItemClickListener(object : AlbumRVAdapter.MyItemClickListener{
+            override fun onItemClick(album: Albums) {
+                changeAlbumFragment(album)
+            }
+
+            override fun onPlayAlbum(albumID: Int) {  // albumID를 받아와서 앨범 첫 곡부터 전체재생
+                playAlbum(albumID)
+            }
+//
+//            override fun onRemoveAlbum(position: Int) {
+//                albumRVAdapter.removeItem(position)
+//            }
+        })
+    }
+
+    private fun getAlbums() {  // song data를 가져옴
+        val albumService = AlbumService()
+
+        albumService.setHomeView(this)
+        albumService.getAlbums()
+    }
+
+    override fun onGetAlbumLoading() {
+//        binding.lookLoadingPb.visibility = View.VISIBLE
+    }
+
+    override fun onGetAlbumSuccess(code: Int, result: AlbumResult) {
+//        binding.lookLoadingPb.visibility = View.GONE
+        initRecyclerView(result)  // 연결에 성공하면 RecyclerView에 data를 넣어줌
+    }
+
+    override fun onGetAlbumFailure(code: Int, message: String) {
+//        binding.lookLoadingPb.visibility = View.GONE
+        Log.d("LOOK_FRAG/SONG-RESPONSE", message)
+    }
+
+    private fun changeAlbumFragment(album: Albums) {  // fragment를 전환하면서 Album 데이터를 넘겨줌
         (context as MainActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, AlbumFragment().apply {
                 arguments = Bundle().apply {
-                    putInt("albumIdx", album.id)
+                    val albumJson = gson.toJson(album)
+                    putString("album", albumJson)
                 }
             })
             .commitAllowingStateLoss()
