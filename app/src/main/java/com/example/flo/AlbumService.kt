@@ -50,6 +50,7 @@ class AlbumService {
 
         trackService.getAlbumSongs(albumIdx).enqueue(object : Callback<TrackResponse> {
             override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
+                Log.d("ddddddd", "${response.isSuccessful} : ${response.code()}")
                 if(response.isSuccessful && response.code() == 200) {
                     val trackResponse : TrackResponse = response.body()!!
 

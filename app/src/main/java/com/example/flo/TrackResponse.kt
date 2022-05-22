@@ -6,14 +6,10 @@ data class TrackResponse (
     @SerializedName("isSuccess") val isSuccess : Boolean,
     @SerializedName("code") val code : Int,
     @SerializedName("message") val message : String,
-    @SerializedName("result") val result : TrackResult
+    @SerializedName("result") val result : ArrayList<TrackResult>
 )
 
 data class TrackResult (
-    @SerializedName("track")  val track : ArrayList<Track>
-)
-
-data class Track (
     @SerializedName("songIdx") val songIdx : Int,
     @SerializedName("title") val title : String,
     @SerializedName("singer") val singer: String,

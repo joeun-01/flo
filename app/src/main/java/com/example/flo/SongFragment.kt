@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flo.databinding.FragmentSongBinding
-import com.google.gson.Gson
 
 class SongFragment : Fragment(), SongView {
     lateinit var binding :FragmentSongBinding
@@ -56,15 +55,15 @@ class SongFragment : Fragment(), SongView {
         getAlbumSongs(albumIdx)
     }
 
-    private fun initRecyclerView(result: TrackResult) {
+    private fun initRecyclerView(result: ArrayList<TrackResult>) {
         // RecyclerView 어뎁터 연결
-
-        val songRVAdapter = SongRVAdapter(requireContext(), result)
-        binding.albumSongsListRv.adapter = songRVAdapter
+        val songRVAdapter = SongRVAdapter(result)
         binding.albumSongsListRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.albumSongsListRv.adapter = songRVAdapter
+
 
         songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener{
-            override fun onPlayAlbum(song : Track) {
+            override fun onPlayAlbum(song : TrackResult) {
                 playAlbumSongs(song)
             }
         })
@@ -80,10 +79,11 @@ class SongFragment : Fragment(), SongView {
     }
 
     override fun onGetTrackLoading() {
-
+        Log.d("SONG_FRAG/SONG-RESPONSE", "로딩 중")
     }
 
-    override fun onGetTrackSuccess(code: Int, result: TrackResult) {
+    override fun onGetTrackSuccess(code: Int, result: ArrayList<TrackResult>) {
+        Log.d("SONG_FRAG/SONG-RESPONSE", result.toString())
         initRecyclerView(result)
     }
 
@@ -91,7 +91,7 @@ class SongFragment : Fragment(), SongView {
         Log.d("SONG_FRAG/SONG-RESPONSE", message)
     }
 
-    private fun playAlbumSongs(song : Track){
+    private fun playAlbumSongs(song : TrackResult){
         val sharedPreferences = requireActivity().getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
 

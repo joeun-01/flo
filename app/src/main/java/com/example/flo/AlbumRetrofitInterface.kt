@@ -10,4 +10,5 @@ interface AlbumRetrofitInterface {
 
     @GET("/albums/{albumIdx}")
     fun getAlbumSongs(@Path("albumIdx") albumIdx : Int) : Call<TrackResponse>
+
 }
