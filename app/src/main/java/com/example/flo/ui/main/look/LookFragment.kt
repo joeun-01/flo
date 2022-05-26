@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import androidx.fragment.app.Fragment
 import com.example.flo.remote.LookView
 import com.example.flo.databinding.FragmentLookBinding
@@ -22,6 +23,10 @@ class LookFragment : Fragment(), LookView {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLookBinding.inflate(inflater, container, false)
+
+        binding.lookChipTitle02Tv.setOnClickListener {
+            binding.lookSv.scrollTo(0, binding.lookSubTitleGenreTv.top)
+        }
 
         return binding.root
     }
