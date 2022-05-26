@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flo">
+    package="com.example.flo" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FLO">
 
-        <activity android:name=".SplashActivity"
+        <activity android:name=".ui.splash.SplashActivity"
             android:exported="true"
             >
 
@@ -24,10 +24,10 @@
 
         </activity>
 
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".SongActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".SignupActivity"/>
+        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.song.SongActivity"/>
+        <activity android:name=".ui.login.LoginActivity"/>
+        <activity android:name=".ui.signup.SignupActivity"/>
 
     </application>
 
