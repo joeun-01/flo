@@ -58,7 +58,7 @@ class SongActivity : AppCompatActivity()   {
 
         binding.songProgressSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar : SeekBar?) {  // 터치 시작
-
+                Log.d("현재 재생 위치", mediaPlayer!!.currentPosition.toString())
             }
 
             override fun onProgressChanged(seekBar : SeekBar?, progress : Int, fromUser : Boolean) {  // 터치 중
@@ -71,7 +71,18 @@ class SongActivity : AppCompatActivity()   {
                 // 변경된 값을 받아옴
                 binding.songProgressSb.progress = seekBar!!.progress
                 songs[nowPos].second = (seekBar.progress * songs[nowPos].playTime) / 100000
-                mediaPlayer?.seekTo(binding.songProgressSb.progress)
+
+                val ratio = mediaPlayer!!.duration / binding.songProgressSb.max
+
+                if(binding.songProgressSb.progress == 0) {  // divideByZero 예외 처리
+                    mediaPlayer?.seekTo(0)
+                }
+                else {
+                    mediaPlayer?.seekTo(binding.songProgressSb.progress * ratio)
+                }
+
+                Log.d("바뀐 재생 위치", (binding.songProgressSb.progress * ratio).toString())
+                Log.d("mediaPlayer 최대 값", mediaPlayer!!.duration.toString())
 
                 // 변경된 값을 UI에 적용
                 timer.interrupt()
@@ -145,15 +156,15 @@ class SongActivity : AppCompatActivity()   {
     }
 
     private fun setPlayer(song : Song){  // 받아온 값 적용
+        val music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
+        mediaPlayer = MediaPlayer.create(this, music)
+
         binding.songMusicTitleTv.text = song.title
         binding.songSignerNameTv.text = song.singer
         binding.songAlbumIv.setImageResource(song.albumImg!!)
         binding.songStartTimeTv.text = String.format("%02d:%02d", song.second / 60, song.second % 60)
         binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime / 60, song.playTime % 60)
         binding.songProgressSb.progress = (song.second * 100000)/song.playTime
-
-        val music = resources.getIdentifier(song.music, "raw", this.packageName)  // MediaPlayer 생성
-        mediaPlayer = MediaPlayer.create(this, music)
 
         if(song.isLike){  // 좋아요 버튼
             binding.songLikeIv.setImageResource(R.drawable.ic_my_like_on)
@@ -188,7 +199,7 @@ class SongActivity : AppCompatActivity()   {
         startTimer()
         timerUI()
         progressUI()
-        
+
         setPlayer(songs[nowPos])
         setPlayerStatus(true)
     }
@@ -306,7 +317,7 @@ class SongActivity : AppCompatActivity()   {
         if(isLike){  // toast.setText가 안먹혀서.... 이렇게 나눔
             val like = layoutInflater.inflate(R.layout.toast_like, findViewById(R.id.toast_like_layout_root))
 
-            var toast = Toast(this)
+            val toast = Toast(this)
 
             toast.view = like
             toast.duration = Toast.LENGTH_SHORT
@@ -317,7 +328,7 @@ class SongActivity : AppCompatActivity()   {
         else{
             val unlike = layoutInflater.inflate(R.layout.toast_likeoff, findViewById(R.id.toast_unlike_layout_root))
 
-            var toast = Toast(this)
+            val toast = Toast(this)
 
             toast.view = unlike
             toast.duration = Toast.LENGTH_SHORT
