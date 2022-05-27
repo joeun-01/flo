@@ -244,7 +244,7 @@
                 android:id="@+id/look_sub_title_genre_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:text="장르"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -336,38 +336,309 @@
             </GridLayout>
 
             <TextView
-                android:id="@+id/look_sub_title_video_tv"
+                android:id="@+id/look_sub_title_situation_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="영상"
+                android:layout_marginTop="40dp"
+                android:text="상황"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/look_sub_title_chart_tv"
+                app:layout_constraintTop_toBottomOf="@id/look_genre_gl" />
+
+            <GridLayout
+                android:id="@+id/look_situation_gl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/look_sub_title_situation_tv">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_who"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_1" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_hgirl"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_2" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_kozypop"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_3" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_daddy"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_4" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_mbti"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_5" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_ott"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_6" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_century"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_situation_exp_7" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_chapter"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_genre_exp_8" />
+
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/look_sub_title_mood_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="분위기"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/look_sub_title_chart_tv"
+                app:layout_constraintTop_toBottomOf="@id/look_situation_gl" />
+
+            <GridLayout
+                android:id="@+id/look_mood_gl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/look_sub_title_mood_tv">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_exciting"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_1" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_calm"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_2" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_console"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_3" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_emotion"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_4" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_sad"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_5" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_depressed"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_6" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_sweet"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_7" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/look_situation_fresh"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_mood_exp_8" />
+
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/look_sub_title_audio_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="오디오"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/look_sub_title_chart_tv"
-                app:layout_constraintTop_toBottomOf="@+id/look_genre_gl" />
+                app:layout_constraintTop_toBottomOf="@+id/look_mood_gl" />
 
-            <ImageView
-                android:id="@+id/look_sub_title_video_arrow_iv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/btn_arrow_more"
-                app:layout_constraintBottom_toBottomOf="@+id/look_sub_title_video_tv"
-                app:layout_constraintStart_toEndOf="@+id/look_sub_title_video_tv"
-                app:layout_constraintTop_toTopOf="@+id/look_sub_title_video_tv" />
+            <TextView
+                android:id="@+id/look_recommend_audio_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천 오디오"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="@+id/look_sub_title_audio_tv"
+                app:layout_constraintTop_toBottomOf="@+id/look_sub_title_audio_tv"/>
 
-            <ImageView
+            <HorizontalScrollView
+                android:id="@+id/look_recommend_audio_hs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_video_exp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/look_sub_title_video_tv" />
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/look_recommend_audio_tv"
+                app:layout_constraintTop_toBottomOf="@+id/look_recommend_audio_tv">
+
+                <LinearLayout
+                    android:id="@+id/look_recommend_audio_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="20dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/look_recommend_audio_movie"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/audio_recommend_1"
+                        android:layout_marginEnd="10dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/look_recommend_audio_deokuro"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/audio_recommend_2"
+                        android:layout_marginEnd="10dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/look_recommend_audio_audiomovie"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/audio_recommend_3"
+                        android:layout_marginEnd="10dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/look_recommend_audio_1freedrink"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/audio_recommend_4"
+                        android:layout_marginEnd="10dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/look_recommend_audio_star"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/audio_recommend_5"
+                        android:layout_marginEnd="20dp" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+<!--            <TextView-->
+<!--                android:id="@+id/look_sub_title_video_tv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:text="영상"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="@id/look_sub_title_chart_tv"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/look_mood_gl" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/look_sub_title_video_arrow_iv"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:src="@drawable/btn_arrow_more"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/look_sub_title_video_tv"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/look_sub_title_video_tv"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/look_sub_title_video_tv" />-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:src="@drawable/img_video_exp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/look_sub_title_video_tv" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

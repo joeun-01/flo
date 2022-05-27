@@ -24,10 +24,6 @@ class LookFragment : Fragment(), LookView {
     ): View? {
         binding = FragmentLookBinding.inflate(inflater, container, false)
 
-        binding.lookChipTitle01.setOnCheckedChangeListener {
-            chip, position ->
-        }
-
         binding.lookChipTitle01.setOnClickListener {
             binding.lookSv.scrollTo(0, binding.lookSubTitleChartTv.top)
         }
@@ -35,6 +31,14 @@ class LookFragment : Fragment(), LookView {
         binding.lookChipTitle02.setOnClickListener {
             binding.lookSv.scrollTo(0, binding.lookSubTitleGenreTv.top)
         }
+
+        binding.lookChipTitle03.setOnClickListener {
+            binding.lookSv.scrollTo(0, binding.lookSubTitleAudioTv.top)
+        }
+
+//        binding.lookChipTitle04.setOnClickListener {
+//            binding.lookSv.scrollTo(0, binding.lookSubTitleVideoTv.top)
+//        }
 
         return binding.root
     }
