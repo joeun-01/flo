@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="@+id/song_music_title_tv"
         app:layout_constraintTop_toBottomOf="@+id/song_music_title_tv"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_singer_more_iv"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -88,7 +88,7 @@
         app:layout_constraintStart_toEndOf="@+id/song_signer_name_tv"
         app:layout_constraintTop_toTopOf="@+id/song_signer_name_tv"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_album_iv"
         android:layout_width="280dp"
         android:layout_height="280dp"
@@ -132,13 +132,13 @@
         app:layout_constraintStart_toStartOf="@+id/song_album_iv"
         app:layout_constraintTop_toBottomOf="@+id/song_music_lyrics_02_iv">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/song_like_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_my_like_off"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/song_unlike_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -224,7 +224,7 @@
 
     </LinearLayout>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_repeat_off_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -234,7 +234,7 @@
         app:layout_constraintEnd_toStartOf="@+id/song_player_layout"
         app:layout_constraintTop_toTopOf="@+id/song_player_layout" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_repeat_on_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -245,7 +245,7 @@
         app:layout_constraintEnd_toStartOf="@+id/song_player_layout"
         app:layout_constraintTop_toTopOf="@+id/song_player_layout" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_repeat_on_one_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -256,7 +256,7 @@
         app:layout_constraintEnd_toStartOf="@+id/song_player_layout"
         app:layout_constraintTop_toTopOf="@+id/song_player_layout" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_random_off_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -266,7 +266,7 @@
         app:layout_constraintStart_toEndOf="@+id/song_player_layout"
         app:layout_constraintTop_toTopOf="@+id/song_player_layout" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_random_on_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -277,7 +277,7 @@
         app:layout_constraintStart_toEndOf="@+id/song_player_layout"
         app:layout_constraintTop_toTopOf="@+id/song_player_layout" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_instagram_iv"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -287,7 +287,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_list_iv"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -297,7 +297,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/song_related_iv"
         android:layout_width="80dp"
         android:layout_height="30dp"

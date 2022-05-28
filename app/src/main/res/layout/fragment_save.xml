@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <LinearLayout
         android:id="@+id/save_select_ly"
         android:layout_width="wrap_content"
@@ -18,13 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/save_select_all_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/btn_playlist_select_off"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/save_select_on_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -61,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/save_select_ly"
         app:layout_constraintStart_toEndOf="@+id/save_select_ly">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/save_listen_all_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"

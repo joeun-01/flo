@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/item_songs_order_tv"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_songs_play_iv"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_songs_more_iv"
         android:layout_width="30dp"
         android:layout_height="30dp"

@@ -113,7 +113,7 @@
         app:layout_constraintStart_toStartOf="@+id/signup_email_et"
         app:layout_constraintEnd_toEndOf="@+id/signup_email_et"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/signup_email_select_iv"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -146,7 +146,7 @@
         app:layout_constraintStart_toStartOf="@+id/signup_password_et"
         app:layout_constraintEnd_toEndOf="@+id/signup_password_et"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/signup_password_show_iv"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -179,7 +179,7 @@
         app:layout_constraintStart_toStartOf="@+id/signup_password_check_et"
         app:layout_constraintEnd_toEndOf="@+id/signup_password_check_et"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/signup_password_check_show_iv"
         android:layout_width="30dp"
         android:layout_height="30dp"

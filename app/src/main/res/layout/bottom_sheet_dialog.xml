@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/bottomDialog_playlist">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/listen_iv"
             android:layout_width="60dp"
             android:layout_height="40dp"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toEndOf="@id/bottomDialog_listen"
         app:layout_constraintEnd_toStartOf="@+id/bottomDialog_mylist">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/playlist_iv"
             android:layout_width="60dp"
             android:layout_height="40dp"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toEndOf="@id/bottomDialog_playlist"
         app:layout_constraintEnd_toStartOf="@+id/bottomDialog_delete">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mylist_iv"
             android:layout_width="60dp"
             android:layout_height="40dp"
@@ -99,7 +99,7 @@
         app:layout_constraintStart_toEndOf="@id/bottomDialog_mylist"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/delete_iv"
             android:layout_width="60dp"
             android:layout_height="40dp"

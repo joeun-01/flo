@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/home_pannel_btn_nugu_iv"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toStartOf="@+id/home_pannel_btn_ticket_iv"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/home_pannel_btn_ticket_iv"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toStartOf="@id/home_pannel_btn_setting_iv"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/home_pannel_btn_setting_iv"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -73,7 +73,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_pannel_tb" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/home_today_music_title_btn_iv"
             android:layout_width="20dp"
             android:layout_height="18dp"

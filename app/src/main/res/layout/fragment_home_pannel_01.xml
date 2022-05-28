@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/home_pannel1_background_iv"
         android:layout_width="match_parent"
         android:layout_height="430dp"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/home_pannel1_btn_play_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -52,7 +52,7 @@
         app:layout_constraintBottom_toTopOf="@id/home_pannel1_album_img_01_iv"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/home_pannel1_album_img_01_iv"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@id/home_pannel1_album_title_01_tv"
         app:layout_constraintBottom_toBottomOf="@id/home_pannel1_album_img_01_iv"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/home_pannel1_album_img_02_iv"
         android:layout_width="40dp"
         android:layout_height="40dp"
