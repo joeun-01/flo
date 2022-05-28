@@ -20,6 +20,7 @@ import com.example.flo.remote.Albums
 import com.example.flo.ui.main.MainActivity
 import com.example.flo.ui.main.album.AlbumFragment
 import com.example.flo.ui.main.album.AlbumRVAdapter
+import com.example.flo.ui.main.voucher.VoucherFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 
@@ -46,6 +47,12 @@ class HomeFragment : Fragment(), HomeView {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         songDB = SongDatabase.getInstance(requireActivity())!!
+
+        // 이용권 구매 창으로 이동
+        binding.homePannelVoucherIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm, VoucherFragment())
+            .commitAllowingStateLoss()
+        }
 
         // 배너 ViewPager 어뎁터 연결
         val bannerAdapter = BannerVPAdapter(this)

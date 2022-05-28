@@ -20,7 +20,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_pannel_vp"/>
 
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_pannel_vp"
             android:layout_width="match_parent"
@@ -28,32 +27,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/home_pannel_btn_nugu_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/btn_main_mike"
+            android:id="@+id/home_pannel_voucher_iv"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_ticket"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            app:layout_constraintEnd_toStartOf="@+id/home_pannel_btn_ticket_iv"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/home_pannel_btn_ticket_iv"
+            android:id="@+id/home_pannel_mike_iv"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/btn_main_ticket"
+            android:src="@drawable/ic_mike"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            app:layout_constraintEnd_toStartOf="@id/home_pannel_btn_setting_iv"
+            app:layout_constraintEnd_toStartOf="@+id/home_pannel_bell_iv"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/home_pannel_btn_setting_iv"
+            android:id="@+id/home_pannel_bell_iv"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/btn_main_setting"
+            android:src="@drawable/ic_mike"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toStartOf="@id/home_pannel_setting_iv"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/home_pannel_setting_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_setting"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
