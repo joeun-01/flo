@@ -27,6 +27,7 @@ class SongActivity : AppCompatActivity()   {
     val songs = arrayListOf<Song>()
 
     var nowPos = 0
+    private var repeat = false
 
     var progressHandler = Handler(Looper.getMainLooper()) {
         progressUI()
@@ -39,7 +40,13 @@ class SongActivity : AppCompatActivity()   {
     }
 
     var resetHandler = Handler(Looper.getMainLooper()){  // 재생이 끝나면 다시 처음으로 되돌아가기 위한 핸들러
-        resetTimer()
+        if(repeat) {  // 반복재생 상태일 때
+            repeatSong()
+        }
+        else {  // 아닐 때
+            moveSong(+1)
+        }
+
         true
     }
 
@@ -97,6 +104,9 @@ class SongActivity : AppCompatActivity()   {
     override fun onStart() {  // 다시 SongActivity로 돌아왔을 때 할 작업
         super.onStart()
 
+        val repeatSP = getSharedPreferences("repeat", MODE_PRIVATE)
+        repeat = repeatSP.getBoolean("songRepeat", false)
+
         initSong()  // main에서 실행 중이던 곡 정보 받아오기
 
         startTimer()
@@ -116,12 +126,19 @@ class SongActivity : AppCompatActivity()   {
         mediaPlayer?.stop()
         songDB.songDao().updateCurrentById(mediaPlayer!!.currentPosition, songs[nowPos].id)
 
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+        // 재생할 song ID를 넘겨줌
+        val songSP = getSharedPreferences("song", MODE_PRIVATE)
+        val songEditor = songSP.edit()  // 에디터를 통해서 data를 넣어줌
 
-        editor.putInt("songId", songs[nowPos].id)
+        songEditor.putInt("songId", songs[nowPos].id)
+        songEditor.apply()  // 내부 저장소에 값 저장
 
-        editor.apply()  // 내부 저장소에 값 저장
+        // 반복재생 여부를 넘겨줌
+        val repeatSP = getSharedPreferences("repeat", MODE_PRIVATE)
+        val repeatEditor = repeatSP.edit()
+
+        repeatEditor.putBoolean("songRepeat", repeat)
+        repeatEditor.apply()
     }
 
     override fun onDestroy() {  // 앱이 아예 종료됐을 때
@@ -137,8 +154,8 @@ class SongActivity : AppCompatActivity()   {
     }
 
     private fun initSong(){  // mainActivity에서 값 받아오기
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val songId = sharedPreferences.getInt("songId", 0)
+        val songSP = getSharedPreferences("song", MODE_PRIVATE)
+        val songId = songSP.getInt("songId", 0)
 
         nowPos = getPlayingSongPosition(songId)
         songs[nowPos] = songDB.songDao().getSong(songs[nowPos].id)
@@ -173,6 +190,11 @@ class SongActivity : AppCompatActivity()   {
             binding.songLikeIv.setImageResource(R.drawable.ic_my_like_off)
         }
 
+        if(repeat) {  // 반복재생이면 반복재생이라고 표시
+            binding.songRepeatOffIv.visibility = View.GONE
+            binding.songRepeatOnOneIv.visibility = View.VISIBLE
+        }
+
         mediaPlayer?.seekTo(song.current)  // seekbar 위치부터 재생
 
         setPlayerStatus(song.isPlaying)  // song의 Boolean 값을 따름
@@ -204,6 +226,21 @@ class SongActivity : AppCompatActivity()   {
         setPlayerStatus(true)
     }
 
+    private fun repeatSong() {
+        // 타이머 초기화
+        resetTimer()
+
+        // 곡 정보를 다시 불러온 후 같은 곡 다시 재생
+        songs[nowPos] = songDB.songDao().getSong(songs[nowPos].id)
+
+        startTimer()
+        timerUI()
+        progressUI()
+
+        setPlayer(songs[nowPos])
+        setPlayerStatus(true)
+    }
+
     private fun initClickListener() {
         binding.songDownIb.setOnClickListener {  // 다시 mainActivity로 돌아감
             finish()
@@ -218,14 +255,16 @@ class SongActivity : AppCompatActivity()   {
         }
 
         // 기본재생, 전체재생, 한곡재생 관리
-        binding.songRepeatOffIv.setOnClickListener {
+        binding.songRepeatOffIv.setOnClickListener {  // 전체재생
             setRepeatStatus(true)
         }
-        binding.songRepeatOnIv.setOnClickListener {
-            resetTimer()  // 한곡재생 버튼을 눌렀을 때는 thread 재시작 해주기
+        binding.songRepeatOnIv.setOnClickListener {  // 한곡재생
+            repeat = true
+            repeatSong()  // 한곡재생 버튼을 눌렀을 때는 thread 재시작 해주기
             setRepeatOneStatus(true)
         }
-        binding.songRepeatOnOneIv.setOnClickListener {
+        binding.songRepeatOnOneIv.setOnClickListener {  // 기본재생으로 다시 돌아감
+            repeat = false
             setRepeatOneStatus(false)
         }
 
@@ -376,9 +415,7 @@ class SongActivity : AppCompatActivity()   {
             try{
                 while(true){
                     if(second >= playTime){  // 시간이 다 되면 종료
-                        runOnUiThread{
-                            resetHandler.sendEmptyMessage(0)
-                        }
+                        resetHandler.sendEmptyMessage(0)
                     }
 
                     if(isPlaying){  // 재생상태일 때

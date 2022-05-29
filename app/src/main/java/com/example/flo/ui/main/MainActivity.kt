@@ -29,15 +29,24 @@ class MainActivity : AppCompatActivity() {
 
     private val songs = arrayListOf<Song>()
     lateinit var songDB : SongDatabase  // 데이터베이스의 song 목록을 가져와서 songs에 저장
+
     var nowPos = 0
+    private var repeat = false
 
     var progressHandler = Handler(Looper.getMainLooper()) {  // progress bar를 업데이트하기 위한 핸들러
-        progressBar()
+        progressUI()
         true
     }
 
     var resetHandler = Handler(Looper.getMainLooper()){  // 재생이 끝나면 다시 처음으로 되돌아가기 위한 핸들러
-        resetProgress()
+
+        if(repeat) {  // 반복재생 상태일 때
+            repeatSong()
+        }
+        else {  // 아닐 때
+            moveSong(+1)
+        }
+
         true
     }
 
@@ -122,8 +131,12 @@ class MainActivity : AppCompatActivity() {
         initSong()
 
         startProgress()
-        progressBar()
+        progressUI()
         setMiniPlayer(songs[nowPos])
+
+        // 반복재생 여부를 가져옴
+        val repeatSP = getSharedPreferences("repeat", MODE_PRIVATE)
+        repeat = repeatSP.getBoolean("songRepeat", false)
 
         Log.d("현재 song 값", songs[nowPos].toString())
     }
@@ -138,11 +151,11 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer?.stop()
         songDB.songDao().updateCurrentById(mediaPlayer!!.currentPosition, songs[nowPos].id)
 
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+        val songSP = getSharedPreferences("song", MODE_PRIVATE)
+        val repeatEditor = songSP.edit()  // 에디터를 통해서 data를 넣어줌
 
-        editor.putInt("songId", songs[nowPos].id)
-        editor.apply()  // 내부 저장소에 값 저장
+        repeatEditor.putInt("songId", songs[nowPos].id)
+        repeatEditor.apply()  // 내부 저장소에 값 저장
     }
 
     override fun onDestroy() {
@@ -155,18 +168,18 @@ class MainActivity : AppCompatActivity() {
         songs[nowPos].isPlaying = false
 
         // MainActivity, SongActivity의 데이터를 저장하고 종료
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()  // 에디터를 통해서 data를 넣어줌
+        val songSP = getSharedPreferences("song", MODE_PRIVATE)
+        val repeatEditor = songSP.edit()  // 에디터를 통해서 data를 넣어줌
 
-        editor.putInt("songId", songs[nowPos].id)
+        repeatEditor.putInt("songId", songs[nowPos].id)
 
-        editor.apply()  // 내부 저장소에 값 저장
+        repeatEditor.apply()  // 내부 저장소에 값 저장
     }
 
     private fun getJwt() : String? {
-        val sharedPreferences = this.getSharedPreferences("auth2", MODE_PRIVATE)
+        val authSP = this.getSharedPreferences("auth2", MODE_PRIVATE)
 
-        return sharedPreferences!!.getString("jwt", "")  // jwt 값이 없으면 0을 반환
+        return authSP!!.getString("jwt", "")  // jwt 값이 없으면 0을 반환
     }
 
     private fun initPlayList() {  // 플레이리스트 생성
@@ -174,8 +187,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSong(){
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val songId = sharedPreferences.getInt("songId", 0)
+        val songSP = getSharedPreferences("song", MODE_PRIVATE)
+        val songId = songSP.getInt("songId", 0)
 
         nowPos = getPlayingSongPosition(songId)
 
@@ -243,7 +256,7 @@ class MainActivity : AppCompatActivity() {
 
         // 곡 재생
         startProgress()
-        progressBar()
+        progressUI()
 
         setMiniPlayer(songs[nowPos])
         setPlayerStatus(true)
@@ -265,7 +278,20 @@ class MainActivity : AppCompatActivity() {
 
         // 음악 초기화
         startProgress()
-        progressBar()
+        progressUI()
+
+        setMiniPlayer(songs[nowPos])
+        setPlayerStatus(true)
+    }
+
+    private fun repeatSong() {
+        // 타이머 초기화
+        resetProgress()
+
+        // 곡 정보를 다시 불러온 후 같은 곡 다시 재생
+        songs[nowPos] = songDB.songDao().getSong(songs[nowPos].id)
+        startProgress()
+        progressUI()
 
         setMiniPlayer(songs[nowPos])
         setPlayerStatus(true)
@@ -286,7 +312,7 @@ class MainActivity : AppCompatActivity() {
         // 앨범의 첫 곡부터 재생
         nowPos = 0
         startProgress()
-        progressBar()
+        progressUI()
 
         setMiniPlayer(songs[0])
         setPlayerStatus(true)
@@ -303,7 +329,7 @@ class MainActivity : AppCompatActivity() {
         progress.start()
     }
 
-    private fun progressBar(){  // UI는 main Thread에서 변경
+    private fun progressUI(){  // UI는 main Thread에서 변경
         binding.mainProgressSb.progress = ((progress.mills / songs[nowPos].playTime) * 100).toInt()
     }
 
