@@ -11,7 +11,7 @@ class VoucherVPAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0 -> VoucherBuyFragment()
-            else -> SongfileFragment()
+            else -> MyVoucherFragment()
         }
     }
 }
