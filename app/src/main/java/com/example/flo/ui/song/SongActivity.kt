@@ -17,6 +17,7 @@ import com.example.flo.databinding.ActivitySongBinding
 import com.example.flo.databinding.ToastLikeBinding
 
 class SongActivity : AppCompatActivity()   {
+    // push 되는 지 확인
 
     lateinit var binding: ActivitySongBinding
     lateinit var toastBinding : ToastLikeBinding
